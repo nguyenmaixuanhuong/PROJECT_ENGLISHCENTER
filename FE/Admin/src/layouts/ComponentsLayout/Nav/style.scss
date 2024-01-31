@@ -1,0 +1,18 @@
+.navbar-toggler{
+    border: none !important;
+    color: white !important;
+}
+.navbar_responsive{
+    display: none; 
+}
+@media (max-width: 992px) {
+    .navbar_fullscreen{
+        display: none;
+    }
+    .navbar_responsive{
+        position: relative;
+        display: block; 
+        top: -3rem;
+
+    }
+}

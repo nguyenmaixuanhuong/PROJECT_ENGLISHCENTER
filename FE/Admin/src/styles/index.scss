@@ -1,0 +1,11 @@
+@import 'normalize.css';
+@import 'variables';
+@import 'mixins';
+*{
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.6rem;
+}

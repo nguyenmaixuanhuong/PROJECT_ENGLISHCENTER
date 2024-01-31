@@ -1,0 +1,8 @@
+@mixin theme($theme: DarkGray, $border-radius:none) {
+    background: $theme;
+    box-shadow: 0 0 1px rgba($theme, .25);
+    color: #fff;
+    padding: 20px;
+    border-radius: $border-radius;
+}
+
