@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import TablePagination from '@mui/material/TablePagination';
 import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
 import './listStudent.style.scss'
@@ -85,19 +84,10 @@ function Row(props) {
 }
 
 export default function ListStudent(props) {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
     return (
-        <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-                <TableHead>
+        <TableContainer component={Paper} style={{maxHeight: '500px'}}>
+            <Table aria-label="collapsible table" stickyHeader>
+                <TableHead >
                     <TableRow>
                         <TableCell />
                         <TableCell>Mã Học Viên</TableCell>
@@ -109,20 +99,11 @@ export default function ListStudent(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.students.map((row) => (
+                    {props.students && props.students.map((row) => (
                         <Row key={row._id} row={row} />
                     ))}
                 </TableBody>
             </Table>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={props.students.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
         </TableContainer>
 
     );

@@ -2,7 +2,9 @@ import { useState ,useEffect} from "react";
 import FormInforStudent from "../../components/student/formInforStudent";
 import { useParams } from 'react-router-dom';
 import {getStudent} from '../../services/student.api.js'
+import useAuthCheck from '../../context/useAuthCheck';
 function UpdateInforStudent() {
+    useAuthCheck();
     const [inforstudent, setInForStudent] = useState(null);
     const { id } = useParams();
     useEffect(()=>{

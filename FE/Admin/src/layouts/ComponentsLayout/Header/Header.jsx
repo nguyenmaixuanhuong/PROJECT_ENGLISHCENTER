@@ -5,14 +5,22 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import Tooltip from '@mui/material/Tooltip';
+import { useNavigate } from 'react-router-dom';
+import './style.scss'
 export default function MenuAppBar() {
+    const Navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem('isLogin');
+        Navigate('/login');
+    }
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box  sx={{ flexGrow: 1 }}>
             <AppBar position="static">
-                <Toolbar>
-                    
-                    <Typography  ml={5} variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Photos
+                <Toolbar className='appbar'>
+                    <Typography ml={5} variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        OceanEngLish
                     </Typography>
                     {(
                         <div className='d-flex align-items-center'>
@@ -26,6 +34,11 @@ export default function MenuAppBar() {
                                 <AccountCircle />
                             </IconButton>
                             <p className=' mb-0'>Admin</p>
+                            <Tooltip title="Đăng Xuất">
+                                <IconButton onClick={handleLogout}>
+                                    <LogoutRoundedIcon sx={{ color: 'white' }} />
+                                </IconButton>
+                            </Tooltip>
                         </div>
                     )}
                 </Toolbar>

@@ -1,32 +1,31 @@
 import Container from '@mui/material/Container';
-import ListStudent from '../../components/student/listStudent.jsx'
-import './Student.style.scss'
+import './Teacher.style.scss'
 import { useApp } from '../../context/AppProvider.js';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import useAuthCheck from '../../context/useAuthCheck';
 import { Button } from '@mui/material';
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
+import TeachersList from '../../components/teacher/teacherslist.jsx'
 function Student() {
     useAuthCheck();
-    const { students, loadStudents } = useApp();
+    const { teachers, loadTeachers } = useApp();
     useEffect(() => {
-        // Load dữ liệu học viên khi component được mount
-        loadStudents();
+        loadTeachers();
     }, []);
     return (
         <Container>
-            <div className="student-header">
-                <h3 className='student-title'>Danh Sách Học Viên</h3>
-                    <Link to="/addstudent">
+            <div className="teacher-header">
+                <h3 className='teacher-title'>Danh Sách Giáo Viên</h3>
+                    <Link to="/addteacher">
                         <Button   variant="contained" color="success">
                             <ControlPointRoundedIcon/>
-                            Thêm Học Viên Mới
+                            Thêm Giáo Viên Mới
                         </Button>
                     </Link>
             </div>
-            <div className="student-body">
-                <ListStudent students={students} ></ListStudent>
+            <div className="teacher-body">
+                <TeachersList teachers={teachers} ></TeachersList>
             </div>
         </Container>
     );

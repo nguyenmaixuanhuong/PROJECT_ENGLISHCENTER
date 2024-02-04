@@ -2,7 +2,9 @@ import Container from '@mui/material/Container';
 import CourseCart from '../../components/course/courseCart'
 import './style.scss'
 import { useApp } from '../../context/AppProvider';
+import useAuthCheck from '../../context/useAuthCheck';
 function Course() {
+    useAuthCheck();
    const {courses} = useApp();
     return (
         <div className='mt-3'>

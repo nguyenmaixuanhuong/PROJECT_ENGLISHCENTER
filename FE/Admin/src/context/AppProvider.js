@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {getListCourse} from '../services/course.api';
 import {getListStudent} from '../services/student.api.js'
+import {getListTeacher} from '../services/teacher.api.js'
+import { getLevels } from '../services/levels.api.js';
 export const AppContext = React.createContext();
 
 export default function AppProvider({children}){
     const [courses, setCourses] = useState(null);
     const [students, setStudents] = useState(null);
+    const [teachers, setTeachers] = useState(null);
+    const [levels, setLevels] = useState(null);
     useEffect(() => {
         async function fetchData() {
             const data = await getListCourse();
@@ -14,12 +18,8 @@ export default function AppProvider({children}){
         fetchData();
     }, [])
 
-    useEffect(()=>{
-        async function loadStudent(){
-            const data = await getListStudent();
-            setStudents(data)
-        }
-        loadStudent();
+    useEffect(()=>{    
+        loadStudents();
     }, []);
     async function loadStudents(){
         try {
@@ -28,11 +28,32 @@ export default function AppProvider({children}){
         } catch (error) {
             console.error('Error loading students:', error);
         }
-        
     }
   
+    useEffect(()=>{    
+        loadTeachers();
+    }, []);
+    async function loadTeachers(){
+        try {
+            const data = await getListTeacher();
+            setTeachers(data)
+        } catch (error) {
+            console.error('Error loading Teachers:', error);
+        }
+    }
+    useEffect(()=>{
+        async function loadLevels(){
+            try {
+                const data = await getLevels();
+                setLevels(data)
+            } catch (error) {
+                console.error('Error loading Levels:', error);
+            }
+        }
+        loadLevels();
+    },[]);
     return (
-        <AppContext.Provider value={{courses,students,loadStudents}}>
+        <AppContext.Provider value={{courses,students,teachers,levels,loadStudents,loadTeachers}}>
             {children}
         </AppContext.Provider>
       )

@@ -1,5 +1,7 @@
 import FormInforStudent from "../../components/student/formInforStudent";
+import useAuthCheck from '../../context/useAuthCheck';
 function AddStudent() {
+    useAuthCheck();
     return ( 
         <div>
             <FormInforStudent></FormInforStudent>

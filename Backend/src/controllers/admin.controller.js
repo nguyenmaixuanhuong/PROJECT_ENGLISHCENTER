@@ -8,7 +8,7 @@ exports.loginAdmin = async (req, res, next) => {
          .send({ error: "Nhập đầy đủ tài khoản và mật khẩu" });
    }
    else if (username === config.account_admin.username && password === config.account_admin.password) {
-      return res.status(200).send('Login success');
+      return res.status(200).json({success: true});
    }
    else {
       return res.status(404).send('Username or password is incorrect');
