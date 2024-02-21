@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import validator from 'validator';
 import './formInfor.style.scss';
-import { createStudent, updateStudent } from '../../services/student.api'
+import { createStudent, updateStudent } from '../../../services/student.api'
 function FormInforStudent(props) {
     const [formData, setFormData] = useState({
         fullName: '',
@@ -31,6 +31,7 @@ function FormInforStudent(props) {
     }, [props.infor]);
     const [successMessage, setSuccessMessage] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         const error = validateField(name, value);
@@ -79,20 +80,24 @@ function FormInforStudent(props) {
             if (props.infor) {
                 if (updateStudent(props.infor._id, formData)) {
                     setSuccessMessage('Cập nhật thông tin học viên thành công!');
+                    setErrorMessage('')
                     setOpenSnackbar(true);
                 }
                 else {
-                    setSuccessMessage('Đã xảy ra lỗi, vui lòng thử lại!');
+                    setErrorMessage('Đã xảy ra lỗi, vui lòng thử lại!');
+                    setSuccessMessage('')
                     setOpenSnackbar(true);
                 }
             }
             else {
                 if (createStudent(formData)) {
                     setSuccessMessage('Thêm thông tin học viên thành công!');
+                    setErrorMessage('')
                     setOpenSnackbar(true);
                 }
                 else {
-                    setSuccessMessage('Đã xảy ra lỗi, vui lòng thử lại!');
+                    setErrorMessage('Đã xảy ra lỗi, vui lòng thử lại!');
+                    setSuccessMessage('')
                     setOpenSnackbar(true);
                 }
             }
@@ -127,6 +132,7 @@ function FormInforStudent(props) {
                             label="Ngày Sinh"
                             name="birthDay"
                             value={formData.birthDay}
+                            format='DD/MM/YYYY'
                             onChange={handleDateChange}
                             renderInput={(params) => <TextField {...params} />}
 
@@ -173,9 +179,14 @@ function FormInforStudent(props) {
                     onClose={handleSnackbarClose}
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 >
-                    <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
-                        {successMessage}
-                    </MuiAlert>
+                    {errorMessage !== '' ?
+                        <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="error">
+                            {errorMessage}
+                        </MuiAlert> :
+                        <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
+                            {successMessage}
+                        </MuiAlert>
+                    }
                 </Snackbar>
             </form>
         </div>

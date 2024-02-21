@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const courseShema = mongoose.Schema({
+    image: {
+        type: String,
+    },
     courseName: {
         type: String,
         required: true

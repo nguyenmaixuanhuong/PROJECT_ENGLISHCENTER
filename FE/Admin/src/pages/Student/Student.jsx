@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container';
-import ListStudent from '../../components/student/listStudent.jsx'
+import ListStudent from '../../components/student/listStudent/listStudent.jsx'
 import './Student.style.scss'
 import { useApp } from '../../context/AppProvider.js';
 import { Link } from 'react-router-dom';

@@ -13,7 +13,7 @@ function Nav() {
                         <Link className='nav-link' to="/course">Khóa Học</Link>
                     </li>
                     <li class="nav-item">
-                        <Link className='nav-link' to="/course">Lớp Học</Link>
+                        <Link className='nav-link' to={`/classes/all`}>Lớp Học</Link>
                     </li>
                     <li class="nav-item">
                         <Link className='nav-link' to="/course">Thời Khóa Biểu</Link>
@@ -49,7 +49,7 @@ function Nav() {
                                         <Link className='nav-link'  to="/course">Khóa Học</Link>
                                     </li>
                                     <li class="nav-item" data-bs-dismiss="offcanvas">
-                                        <Link className='nav-link' to="/course">Lớp Học</Link>
+                                        <Link className='nav-link' to={`/classes/all`}>Lớp Học</Link>
                                     </li>
                                     <li class="nav-item" data-bs-dismiss="offcanvas">
                                         <Link className='nav-link' to="/course">Thời Khóa Biểu</Link>

@@ -1,5 +1,5 @@
 import { useState ,useEffect} from "react";
-import FormInforStudent from "../../components/student/formInforStudent";
+import FormInforStudent from "../../components/student/formInfor/formInforStudent";
 import { useParams } from 'react-router-dom';
 import {getStudent} from '../../services/student.api.js'
 import useAuthCheck from '../../context/useAuthCheck';
@@ -15,7 +15,6 @@ function UpdateInforStudent() {
         fetchData();
     }, [id]);
 
-    console.log(inforstudent);
     return (
         <div>
             <FormInforStudent infor={inforstudent}></FormInforStudent>

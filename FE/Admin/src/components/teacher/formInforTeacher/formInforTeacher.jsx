@@ -7,8 +7,8 @@ import dayjs from 'dayjs';
 import { useCallback, useEffect, useState } from 'react';
 import validator from 'validator';
 import './formInfor.style.scss';
-import Levels from '../levels/levels';
-import { createTeacher,updateTeacher } from '../../services/teacher.api'
+import Levels from '../../levels/levels';
+import { createTeacher, updateTeacher } from '../../../services/teacher.api'
 function FormInforTeacher(props) {
     const [formData, setFormData] = useState({
         fullName: '',
@@ -66,6 +66,8 @@ function FormInforTeacher(props) {
                 else return '';
             case 'birthDay':
                 return value === null ? 'Ngày sinh không được để trống' : '';
+            case 'level':
+                return value === null ? 'Trình độ không được để trống' : '';
             case 'email':
                 if (value.trim() === '') {
                     return 'Email không được để trống'
@@ -169,7 +171,8 @@ function FormInforTeacher(props) {
                     />
                 </FormControl>
                 <FormControl sx={{ width: '25%', marginTop: '8px' }}>
-                    <Levels  levelSelected={ formData.level } onChangeLevel={handleLevelChange}></Levels>
+                    <Levels levelSelected={formData.level} onChangeLevel={handleLevelChange}
+                    ></Levels>
                 </FormControl>
                 <FormControl sx={{ width: '70%', marginLeft: '5%' }} >
                     <TextField
@@ -188,7 +191,7 @@ function FormInforTeacher(props) {
                     Thêm
                 </Button> :
                     <Button type="submit" variant="contained" color="primary" sx={{ width: '50%', padding: "10px", margin: 'auto', display: 'block' }}>
-                        Update
+                        Cập Nhật
                     </Button>
                 }
                 <Snackbar

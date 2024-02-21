@@ -5,12 +5,12 @@ const Teacher = require('../models/teacher.model')
 
 exports.createClass = async (req, res, next) => {
     const inforClass = req.body
-    if ((inforClass.className && inforClass.teacher && inforClass.course)) {
+    if ((inforClass.className && inforClass.course)) {
         const newClass = await new Class(inforClass)
-        const teacher = await Teacher.findById(newClass.teacher)
-        teacher.class.push(newClass._id)
+        // const teacher = await Teacher.findById(newClass.teacher)
+        // teacher.class.push(newClass._id)
         await newClass.save()
-        await teacher.save()
+        // await teacher.save()2
             .then(() => {
                 res.status(200).send(newClass)
             })
@@ -74,19 +74,37 @@ exports.addStudentInClass = async (req, res) => {
 exports.listClass= async (req, res) => {
     try { 
         if(req.query.teacher){
-            const listClass = await Class.find({teacher: req.query.teacher})
+            const listClass = await Class.find({teacher: req.query.teacher}).populate(['course','teacher'])
              res.status(200).send(listClass)
 
         }  
         else if(req.query.course) {
-            const listClass = await Class.find({course: req.query.course})
+            const listClass = await Class.find({course: req.query.course}).populate(['course','teacher'])
             res.status(200).send(listClass)
         }
         else{
-          const listClass = await Class.find({})
+          const listClass = await Class.find({}).populate(['course','teacher'])
           res.status(200).send(listClass)
         }
     } catch (error) {
+        console.log(error);
         res.status(500).send(error.message)
     }
 };
+
+exports.finishedClass = async(req, res) => {
+    try {
+        const id = req.query.id
+        const classFinished = await Class.findOneAndUpdate(
+            { _id: id },
+            { isFinish: true},
+            {
+                upsert: false,
+                new: true,
+            },
+        )
+        res.status(200).send(classFinished)
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}

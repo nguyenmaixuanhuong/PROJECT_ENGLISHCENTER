@@ -1,4 +1,4 @@
-import FormInforStudent from "../../components/student/formInforStudent";
+import FormInforStudent from "../../components/student/formInfor/formInforStudent";
 import useAuthCheck from '../../context/useAuthCheck';
 function AddStudent() {
     useAuthCheck();

@@ -2,38 +2,52 @@ const Course = require('../models/course.model');
 const RegisterCourse = require('../models/registerCourse.model');
 const validator = require('validator');
 const Level = require('../models/level.model');
+const uploadImage = require('../Service/uploadImage')
 exports.createCourse = async (req, res, next) => {
     try {
         const newCourse = new Course(req.body);
         await newCourse.save();
         res.status(200).send({ newCourse })
     } catch (error) {
+        
         res.status(400).send(error);
     }
 };
 exports.listCourse = async (req, res, next) => {
-    try {  
-        const courses = await Course.find({});
+    try {
+        const courses = await Course.find({})
         res.status(200).send(courses);
     } catch (error) {
         res.status(500).send('Server error', error);
     }
 };
 exports.updateCourse = async (req, res, next) => {
-    const course_id = req.query.id;
-    const course_content = req.body
-    const course = await Course.findOneAndUpdate(
-        { _id: course_id },
-        { $set: course_content },
-        {
-            upsert: true,
-            new: true,
-        },
-    )
-        .then(() => res.status(200).send(course))
-        .catch(error => { res.status(500).send('Error updating course', error); })
+    const course_id = req.body.id;
+    const course_content = req.body.course;
+    try {
+        const course = await Course.findOneAndUpdate(
+            { _id: course_id },
+            { $set: course_content },
+            {
+                upsert: false,
+                new: true,
+            },
+        )
+        course.save();
+        res.status(200).send(course)
+    } catch (error) {
+        res.status(500).send(error)
+    }
 };
-
+exports.getCourse = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        const course = await Course.findById(id);
+        res.status(200).send(course);
+    } catch (error) {
+        res.status(500).send( error);
+    }
+}
 exports.deleteCourse = async (req, res, next) => {
     try {
         const course_id = req.query.id;
@@ -44,7 +58,7 @@ exports.deleteCourse = async (req, res, next) => {
                 upsert: true,
                 new: true,
             },)
-        res.status(200).send("Course deleted",course)
+        res.status(200).send("Course deleted", course)
     } catch (error) {
         res.status(500).send('Error server delete course', error);
     }
@@ -71,7 +85,7 @@ exports.registerCourse = async (req, res, next) => {
 }
 
 
-exports.levels = async(req,res)=>{
+exports.levels = async (req, res) => {
     try {
         const levels = await Level.find();
         res.status(200).send(levels)
@@ -80,7 +94,7 @@ exports.levels = async(req,res)=>{
     }
 }
 
-exports.getLevel = async(req, res)=>{
+exports.getLevel = async (req, res) => {
     try {
         const id = req.query.id;
         const level = await Level.findById(id);
@@ -88,6 +102,6 @@ exports.getLevel = async(req, res)=>{
     } catch (error) {
         console.log(error);
         res.status(500).send('Server error: ' + error);
-        
+
     }
 };

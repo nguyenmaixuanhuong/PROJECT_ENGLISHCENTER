@@ -1,0 +1,22 @@
+.cart-item{
+    padding: 15px;
+    width: fit-content;
+}
+
+.course-header{
+    padding: 20px 0;
+    h3{
+      text-align: center;
+      font-weight: 600;
+    }
+   
+}
+.listcart{
+    position: relative;
+    .addcourse{
+        position: fixed;
+        top: 85%;
+        left:93%;
+        z-index: 1000;
+    }
+}

@@ -7,15 +7,13 @@ const route = require('./src/routes');
 const app = express();
 app.use(cors());
 app.options('*',cors());
-app.use(fileUpload());
 app.use(express.json())
 app.use(express.urlencoded({
-    extended: true,
+    extended: false,
 }))
+app.use(fileUpload());
 
 route(app);
-
-
 
 async function startServer() {
     await connectDatabase();

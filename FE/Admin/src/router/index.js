@@ -8,6 +8,9 @@ import Login from "../pages/Login/Login";
 import Teacher from "../pages/Teacher/Teacher";
 import AddTeacher from "../pages/Teacher/AddTeacher";
 import UpdateTeacher from "../pages/Teacher/UpdateInforTeacher";
+import AddCourse from "../pages/Courses/AddCourese";
+import UpdateInforCourse from "../pages/Courses/UpdateInforCourse";
+import Classes from "../pages/Class/Classes";
 const routes = [
     {path: '/', page: HomePage},
     {path: '/course', page: Course,},
@@ -18,6 +21,9 @@ const routes = [
     {path: '/teachers', page: Teacher},
     {path: '/addteacher', page: AddTeacher},
     {path: '/updateteacher/:id', page: UpdateTeacher},
+    {path: '/addcourse', page: AddCourse},
+    {path: '/updatecourse/:id', page: UpdateInforCourse},
+    {path: '/classes/:id', page: Classes},
     
 ]
 

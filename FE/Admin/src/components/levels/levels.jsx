@@ -14,7 +14,7 @@ export default function Levels({levelSelected,onChangeLevel}) {
     };
     return (
         <div>
-            <FormControl sx={{ m: 1, }} fullWidth>
+            <FormControl  fullWidth>
                 <InputLabel id="demo-simple-select-autowidth-label">Level</InputLabel>             
                 <Select
                     labelId="demo-simple-select-autowidth-label"
@@ -23,6 +23,7 @@ export default function Levels({levelSelected,onChangeLevel}) {
                     onChange={handleChange}
                     autoWidth
                     label='Level'
+                    helperText='Level chưa được chọn'
                 >
                     {levels && levels.map((level) => (                 
                             <MenuItem key={level._id}  value={level._id}>{level.name}</MenuItem>                         

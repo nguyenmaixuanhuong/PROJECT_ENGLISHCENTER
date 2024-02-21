@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import useAuthCheck from '../../context/useAuthCheck';
 import { Button } from '@mui/material';
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
-import TeachersList from '../../components/teacher/teacherslist.jsx'
+import TeachersList from '../../components/teacher/teacherList/teacherslist.jsx'
 function Student() {
     useAuthCheck();
     const { teachers, loadTeachers } = useApp();

@@ -23,7 +23,7 @@ function Row(props) {
                 <TableCell align="center">{row.birthDay}</TableCell>
                 <TableCell align="center">{row.phoneNumber}</TableCell>
                 <TableCell align="center">{row.email}</TableCell>
-                <TableCell align="center">{row.level.name}</TableCell>
+                <TableCell align="center">{row.level?.name}</TableCell>
                 <TableCell align="center"><Link to={`/updateteacher/${row._id}`}>
                     <Tooltip title="Cập nhật">
                         <IconButton>

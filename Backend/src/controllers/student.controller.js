@@ -47,7 +47,7 @@ exports.listStudent = async (req, res) => {
 exports.getStudent = async (req, res) => {
    try {
       const student_id = req.query.id
-      const student = await Student.findById({ _id: student_id })
+      const student = await Student.findById({ _id: student_id }).populate(['class', 'account'])
       res.status(200).send(student)
    } catch (error) {
       res.status(500).send("Error" + error);

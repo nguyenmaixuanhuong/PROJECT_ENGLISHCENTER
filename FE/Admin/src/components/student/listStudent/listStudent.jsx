@@ -16,6 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
 import './listStudent.style.scss'
 import { Link } from 'react-router-dom';
+import DetailInforStudent from '../ModalDetailInfor/detailInforStudent';
 function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
@@ -38,13 +39,17 @@ function Row(props) {
                 <TableCell align="center">{row.birthDay}</TableCell>
                 <TableCell align="center">{row.phoneNumber}</TableCell>
                 <TableCell align="center">{row.address}</TableCell>
-                <TableCell align="center"><Link to={`/updatestudent/${row._id}`}>
-                    <Tooltip title="Cập nhật">
-                        <IconButton>
-                            <EditIcon/>
-                        </IconButton>
+                <TableCell align="center" style={{ display: 'flex' }}>
+                    <Tooltip title="Thông tin Chi tiết">
+                        <DetailInforStudent id={row._id} />
                     </Tooltip>
-                </Link></TableCell>
+                    <Link to={`/updatestudent/${row._id}`}>
+                        <Tooltip title="Cập nhật">
+                            <IconButton>
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </Link></TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -62,7 +67,7 @@ function Row(props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.class.map((historyRow) => (
+                                    { row.class.map((historyRow) => (
                                         <TableRow key={historyRow.className}>
                                             <TableCell component="th" scope="row">
                                                 {historyRow.className}
@@ -85,7 +90,7 @@ function Row(props) {
 
 export default function ListStudent(props) {
     return (
-        <TableContainer component={Paper} style={{maxHeight: '500px'}}>
+        <TableContainer component={Paper} style={{ maxHeight: '500px' }}>
             <Table aria-label="collapsible table" stickyHeader>
                 <TableHead >
                     <TableRow>
