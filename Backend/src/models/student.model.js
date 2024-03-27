@@ -10,7 +10,7 @@ const studentSchema = mongoose.Schema({
         required: true
     },
     birthDay:{
-        type: Date,
+        type: String,
         required: true
     },
     phoneNumber:{

@@ -6,6 +6,7 @@ import ClassCart from "../../components/Class/ListClass/ClassCard";
 import './Classes.styles.scss'
 import InforClass from '../../components/Class/ModalInforClass/InforClass';
 import { getCourse } from "../../services/course.api";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 function Classes() {
     useAuthCheck();
     const [course, setCourse] = useState();
@@ -35,11 +36,21 @@ function Classes() {
             <div className="classes-header">
                 <h3 className='classes-title'>Danh Sách Lớp Học</h3>
             </div>
-            <h5>Khóa {course && course.courseName}</h5>
-            <div className='d-flex flex-wrap justify-content-center'>
+
+            {course ?
+                <div className="name_course ">
+                    <ArrowRightIcon></ArrowRightIcon>
+                    <h5 >Khóa {course && course.courseName}</h5>
+                </div>
+                : <div className="name_course" >
+                    <ArrowRightIcon></ArrowRightIcon>
+                    <h5>Tất cả lớp học</h5>
+                </div>
+            }
+            <div className='d-flex flex-wrap justify-content-center '>
                 {classes && classes.map(item => (
                     <div className='class-item' key={item._id}>
-                        <ClassCart class={item} ></ClassCart>
+                        <ClassCart loadClasses={loadClasses} class={item} ></ClassCart>
                     </div>))
                 }
             </div>

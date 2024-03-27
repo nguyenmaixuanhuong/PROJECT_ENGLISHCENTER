@@ -23,7 +23,7 @@ function Course() {
                     </Fab>
                 </Tooltip>
             </Link>
-            <Container className='bg-light'>
+            <Container>
                 <div className="course-header">
                     <h3 className='course-title'>Danh Sách Khóa Học</h3>
 

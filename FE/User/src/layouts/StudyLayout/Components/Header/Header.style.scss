@@ -1,0 +1,15 @@
+.study_logo{
+    width: 90px; 
+    img{
+        max-width: 100%;
+    }
+}
+@media  (max-width: 1023px) {
+    .study_logo{
+        margin-left: 30px;
+    }
+ }
+
+ .study_header{
+    background-color: rgb(0, 4, 134);
+ }

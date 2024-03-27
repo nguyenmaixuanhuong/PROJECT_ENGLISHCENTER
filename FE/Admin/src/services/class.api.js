@@ -5,6 +5,15 @@ export const getAllClass = async ()=>{
         return response.data;
     } catch (error) {
         throw error;
+    }    
+}
+
+export const getClass = async (id)=>{
+    try {
+        const response = await API().get('/admin/class/getclass',{params: {id: id}})
+        return response.data;
+    } catch (error) {
+        throw error;
     }
       
 }
@@ -40,6 +49,24 @@ export const updateClass = async (id,update)=>{
 export const finishClass = async (id )=>{
     try {
         const response = await API().get('/admin/class/finished',{params:{id}});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const addStudentsInClass = async (id,students )=>{
+    try {
+        const response = await API().post('/admin/class/addstudent',{id,students});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const addTeachersInClass = async (id,teachers )=>{
+    try {
+        const response = await API().post('/admin/class/addteacher',{id,teachers});
         return response.data;
     } catch (error) {
         throw error;

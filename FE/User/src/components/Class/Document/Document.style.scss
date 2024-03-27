@@ -1,0 +1,13 @@
+.document-item{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid rgb(225, 225, 225);
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    // box-shadow: 2px 2px 5px rgb(237, 237, 237);
+    p{
+        margin: 10px 0 0 10px;
+    }
+}

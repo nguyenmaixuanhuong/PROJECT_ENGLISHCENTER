@@ -1,0 +1,46 @@
+.carousel{
+    max-height: 650px;
+}
+.awssld{
+    height: 650px;
+}
+.awssld__content{
+    max-height: 650px;
+    img{
+        max-width: 100%; 
+        height: auto; 
+        display: block;
+        margin: 0 auto; 
+    }
+}
+.awssld__bullets{
+    display: none;
+}
+@media (min-width: 740px) and (max-width: 1175px) {
+    .awssld{
+        height: 300px;
+    }
+    .awssld__content{
+    max-height: 100%;
+        img{
+            max-width: 100%; 
+            height: auto; 
+            display: block;
+            margin: 0 auto; 
+        }
+    }
+ }
+ 
+ @media (max-width: 739px) {
+    .awssld__content{
+        img{
+            max-width: 100%; 
+            height: auto; 
+            display: block;
+            margin: 0 auto; 
+        }
+    }
+    .awssld{
+        height: 200px;
+    }
+ }

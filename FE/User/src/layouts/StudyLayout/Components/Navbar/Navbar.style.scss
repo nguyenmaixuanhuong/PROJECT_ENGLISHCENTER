@@ -1,0 +1,51 @@
+@import '../../../../styles/_variables.scss';
+
+.navbar-fullwight{
+    height: 93vh;
+    position: fixed;
+    z-index: 1110;
+    margin-top: 65px;
+    .nav-list{
+        height: 100%;
+        width: 300px;
+    }
+}
+
+.navbar-responsive{
+    display: none;  
+    position: fixed;
+    z-index: 1110;
+}
+
+.navbar-infor{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 15px  0 ;
+    background-color: $primary-color;
+}
+@media  (max-width: 972px) {
+    .navbar-fullwight{
+       display: none !important;
+    }
+ 
+    .navbar-responsive {
+       display: block;
+       position: fixed;
+       top: 10px;
+       z-index: 1110 !important;
+    }
+ }
+ .menu-item{
+    padding: 20px!important;
+    span{
+        font-size: 18px;
+        color: black;
+    }
+ }
+ .class-item{
+    padding: 15px 0 15px 30px !important;
+    border-top-right-radius: 30px!important;
+    border-bottom-right-radius: 30px!important;
+    width: 95%;
+    color: black !important ;
+ }

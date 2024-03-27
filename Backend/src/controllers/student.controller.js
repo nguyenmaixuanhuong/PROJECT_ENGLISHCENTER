@@ -11,7 +11,7 @@ exports.createAccountStudent = async (req, res, next) => {
          if (validator.isMobilePhone(inforStudent.phoneNumber, 'vi-VN')) {
             const studentCode = generateCode(6);
             const username = `HS${studentCode}`
-            const password = generateCode(8);
+            const password = inforStudent.phoneNumber;
             const AccountStudent = await new Account({
                username,
                password,

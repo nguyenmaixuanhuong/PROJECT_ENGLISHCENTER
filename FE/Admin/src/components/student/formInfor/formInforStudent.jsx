@@ -92,6 +92,12 @@ function FormInforStudent(props) {
             else {
                 if (createStudent(formData)) {
                     setSuccessMessage('Thêm thông tin học viên thành công!');
+                    setFormData({
+                        fullName: '',
+                        birthDay: null,
+                        phoneNumber: '',
+                        address: '',
+                    });
                     setErrorMessage('')
                     setOpenSnackbar(true);
                 }
@@ -112,7 +118,7 @@ function FormInforStudent(props) {
 
     return (
         <div className='formInfor'>
-            <h3>THÔNG TIN HỌC VIÊN</h3>
+            <h3 className='formInfor_title'>THÔNG TIN HỌC VIÊN</h3>
             <form onSubmit={HandleSubmit}>
                 <FormControl fullWidth>
                     <TextField
@@ -126,7 +132,7 @@ function FormInforStudent(props) {
                         error={!!errors.fullName}
                     />
                 </FormControl>
-                <FormControl sx={{ width: '48%' }}>
+                <FormControl sx={{ width: '48%',marginTop: 3 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Ngày Sinh"
@@ -141,7 +147,7 @@ function FormInforStudent(props) {
                         />
                     </LocalizationProvider>
                 </FormControl >
-                <FormControl sx={{ width: '48%', marginLeft: '4%' }}>
+                <FormControl sx={{ width: '48%', marginLeft: '4%', marginTop: 3 }}>
                     <TextField
                         sx={{ margin: '0' }}
                         label="Số điện thoại"
@@ -154,7 +160,7 @@ function FormInforStudent(props) {
                         error={!!errors.phoneNumber}
                     />
                 </FormControl>
-                <FormControl fullWidth>
+                <FormControl fullWidth  sx={{ marginTop: 3, marginBottom: 3 }}>
                     <TextField
                         label="Địa chỉ"
                         variant="outlined"
@@ -170,7 +176,7 @@ function FormInforStudent(props) {
                     Thêm
                 </Button> :
                     <Button type="submit" variant="contained" color="primary" sx={{ width: '50%', padding: "10px", margin: 'auto', display: 'block' }}>
-                        Update
+                       Cập nhật thông tin
                     </Button>
                 }
                 <Snackbar

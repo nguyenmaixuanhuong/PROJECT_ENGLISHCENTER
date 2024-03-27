@@ -17,6 +17,9 @@ function FormInforCourse(props) {
     const [file, setFile] = useState()
     const [imageURL, setImageURL] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         image: '',
         courseName: '',
@@ -34,9 +37,7 @@ function FormInforCourse(props) {
         category: '',
         level: '',
     });
-    const [successMessage, setSuccessMessage] = useState('');
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+   
     useEffect(() => {
         setFormData({
             image: props.infor ? props.infor.image : '',
@@ -48,9 +49,12 @@ function FormInforCourse(props) {
             level: props.infor ? props.infor.level : '',
         });
     }, [props.infor]);
+
     const handleLevelChange = useCallback((selectedLevel) => {
         setFormData({ ...formData, level: selectedLevel });
     }, [formData]);
+
+    
     const handleImageChange = useCallback(async (selectedImage) => {
         setFile(selectedImage)
         const objectURL = URL.createObjectURL(selectedImage);
@@ -138,7 +142,6 @@ function FormInforCourse(props) {
             }
             else {
                 if (addCourse(formData)) {
-
                     setSuccessMessage('Thêm thông tin khóa học thành công!');
                     setErrorMessage('')
                     setLoading(false);
@@ -163,7 +166,6 @@ function FormInforCourse(props) {
 
     return (
         <div className='formInfor'>
-
             {loading && <CircularProgress className='loading'></CircularProgress>}
             <h3>THÔNG TIN KHÓA HỌC</h3>
             <form onSubmit={HandleSubmit}>
@@ -196,7 +198,8 @@ function FormInforCourse(props) {
                             helperText={errors.category}
                             error={!!errors.category}
                         >
-                            <MenuItem value={'Trẻ em'}>Trẻ Em</MenuItem>
+                            <MenuItem value={'Trẻ em'}>Trẻ em</MenuItem>
+                            <MenuItem value={'Thiếu niên'}>Thiếu niên</MenuItem>
                             <MenuItem value={'Người lớn'}>Người lớn</MenuItem>
                         </Select>
                     </FormControl>
@@ -259,7 +262,7 @@ function FormInforCourse(props) {
                     Thêm
                 </Button> :
                     <Button type="submit" variant="contained" color="primary" sx={{ width: '50%', padding: "10px", margin: 'auto', display: 'block' }}>
-                        Update
+                        Cập nhật thông tin
                     </Button>
                 }
                 <Snackbar

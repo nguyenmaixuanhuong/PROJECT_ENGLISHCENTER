@@ -6,10 +6,10 @@ const classSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    teacher:{
+    teachers:[{
         type: Schema.Types.ObjectId,
         ref: 'Teacher',
-    },
+    }],
     course:{
         type: Schema.Types.ObjectId,
         ref: 'Course',
@@ -28,6 +28,14 @@ const classSchema = mongoose.Schema({
             ref: 'Student',
         }
     ],
+    informations:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Information',
+    }],
+    attendances:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Attendance',
+    }],
     isFinish:{
         type: Boolean,
         default: false,

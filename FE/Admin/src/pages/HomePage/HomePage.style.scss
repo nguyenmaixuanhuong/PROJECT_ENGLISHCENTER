@@ -1,0 +1,29 @@
+.home-container{
+    padding: 50px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.overview-register{
+    background: linear-gradient(to right, #5de7ee, #3e92ce, #5739cf);
+}
+
+.overview-student{
+    background: linear-gradient(to right, #a8f965, #3ea947, #2c7e38);
+}
+
+.overview-teacher{
+    background: linear-gradient(to right, #f19073, #ee5656, #d52f2f);
+}
+
+.overview-class{
+    background: linear-gradient(to right, #f1abc9, #ef59a9, #c82687);
+}
+
+.overview-item{
+    text-decoration: none ;
+}
+.overview-item:hover{
+    box-shadow: 2px 2px 20px rgb(218, 218, 218);
+}

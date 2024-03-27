@@ -4,6 +4,7 @@ import { useState } from 'react';
 import MuiAlert from '@mui/material/Alert';
 import { login } from '../../services/login.api';
 import { useNavigate } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
 import './login.style.scss';
 const Login = () => {
     const navigate = useNavigate()
@@ -58,9 +59,11 @@ const Login = () => {
         setOpenSnackbar(false);
     };
     return (
-        <div className='loginForm'>
-            <form onSubmit={HandleSubmitLogin}>
-                <h5>ĐĂNG NHẬP</h5>
+        <div className='container_form'>
+            <form className='form_login' onSubmit={HandleSubmitLogin}>
+                <Typography variant='h5' fontWeight={700}>
+                    ĐĂNG NHẬP
+                </Typography>
                 <FormControl fullWidth>
                     <TextField
                         label="Username"
@@ -86,7 +89,7 @@ const Login = () => {
                         error={!!errors.password}
                     />
                 </FormControl>
-                <Button type="submit" variant="contained" color="primary" sx={{ width: '100%', padding: "15px", margin: 'auto', display: 'block' }}>
+                <Button type="submit" variant="contained" color="primary"  sx={{ width: '100%', padding: "15px", marginTop: 2, display: 'block',  }}>
                     ĐĂNG NHẬP
                 </Button>
             </form>

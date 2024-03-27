@@ -1,4 +1,6 @@
-.loginForm{
+.container_form{
+    background-image: url('../../../public//asset/background.png');
+    background-size: cover;
     display: flex;
     align-items: center;
     height: 100vh;
@@ -6,5 +8,8 @@
     form{
         margin: auto;
         width: 600px;
+        background-color: white;
+        padding: 36px;
+        box-shadow: 2px 2px 20px rgb(234, 234, 234);
     }
 }

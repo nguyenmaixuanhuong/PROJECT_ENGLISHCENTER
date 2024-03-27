@@ -4,7 +4,9 @@ import { getListStudent } from '../services/student.api.js'
 import { getListTeacher } from '../services/teacher.api.js'
 import { getLevels } from '../services/levels.api.js';
 import { getAllClass, getClassByCourse } from '../services/class.api.js';
+import { getRooms } from '../services/room.api.js';
 import axios from 'axios';
+import { format,parseISO,isValid } from 'date-fns';
 export const AppContext = React.createContext();
 
 export default function AppProvider({ children }) {
@@ -13,6 +15,9 @@ export default function AppProvider({ children }) {
     const [teachers, setTeachers] = useState(null);
     const [levels, setLevels] = useState(null);
     const [classes, setClasses] = useState(null);
+    const [rooms, setRooms] = useState(null);
+
+// load course
     async function loadCourses() {
         const data = await getListCourse();
         setCourses(data);
@@ -21,6 +26,7 @@ export default function AppProvider({ children }) {
         loadCourses();
     }, [])
 
+// load Student
     async function loadStudents() {
         try {
             const data = await getListStudent();
@@ -33,6 +39,7 @@ export default function AppProvider({ children }) {
         loadStudents();
     }, []);
 
+// Load Teacher
     async function loadTeachers() {
         try {
             const data = await getListTeacher();
@@ -45,6 +52,8 @@ export default function AppProvider({ children }) {
         loadTeachers();
     }, []);
 
+
+// load Levels
     useEffect(() => {
         async function loadLevels() {
             try {
@@ -57,6 +66,7 @@ export default function AppProvider({ children }) {
         loadLevels();
     }, []);
 
+    // Load Classes trong Course
     async function loadClassesByCourse(id) {
         try {
             const data = await getClassByCourse(id);
@@ -69,6 +79,7 @@ export default function AppProvider({ children }) {
         loadClassesByCourse();
     },[])
 
+// Load All Class
     async function loadAllClasses() {
         try {
             const data = await getAllClass();
@@ -81,7 +92,21 @@ export default function AppProvider({ children }) {
         loadAllClasses();
     },[])
 
+    // Load Rooms 
+    async function loadRooms() {
+        try {
+            const data = await getRooms();
+            setRooms(data);
+        } catch (error) {
+            console.error('Error loading Rooms:', error);           
+        }
+    }
+    useEffect(() => {
+        loadRooms();
+    },[])
 
+
+// upLoad Image on Cloud Storage
     async function uploadImage(image, folder) {
         const cloud_name = `dhvgsmsf2`
         const preset_name = `imageupload`
@@ -100,8 +125,19 @@ export default function AppProvider({ children }) {
             .catch((error) => { return error })
         return url;
     };
+
+    // FormatDate 
+     function formatDate(date){
+        const dateObj = parseISO(date);
+        if (isValid(dateObj)) {
+            const formattedDate = format(dateObj, 'dd/MM/yyyy');
+            return formattedDate// Kết quả: 20/02/2024 17:00:00
+        } else {
+          return '22/11/2002';
+        }
+    }
     return (
-        <AppContext.Provider value={{ courses, students, teachers, levels, classes,loadStudents, loadTeachers, loadCourses, uploadImage,loadClassesByCourse,loadAllClasses }}>
+        <AppContext.Provider value={{ courses, students, teachers, levels, classes, rooms,loadStudents, loadTeachers, loadCourses, uploadImage,loadClassesByCourse,loadAllClasses,loadRooms,formatDate }}>
             {children}
         </AppContext.Provider>
     )

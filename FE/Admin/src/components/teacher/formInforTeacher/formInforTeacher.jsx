@@ -4,6 +4,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
+import { IconButton, Typography } from "@mui/material";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useCallback, useEffect, useState } from 'react';
 import validator from 'validator';
 import './formInfor.style.scss';
@@ -106,6 +109,13 @@ function FormInforTeacher(props) {
             }
             else {
                 if (createTeacher(formData)) {
+                    setFormData({
+                        fullName: '',
+                        birthDay: null,
+                        phoneNumber: '',
+                        email: '',
+                        level: null,
+                    });
                     setSuccessMessage('Thêm thông tin giáo viên thành công!');
                     setErrorMessage('')
                     setOpenSnackbar(true);
@@ -129,9 +139,17 @@ function FormInforTeacher(props) {
 
     return (
         <div className='formInfor'>
+            <div className="btn-return">
+                <Link to='/teachers'>
+                    <IconButton sx={{ color: 'red' }}>
+                        <Typography variant="body1">Trở Về</Typography>
+                        <ArrowRightIcon></ArrowRightIcon>
+                    </IconButton>
+                </Link>
+            </div>
             <h3>THÔNG TIN GIÁO VIÊN</h3>
             <form onSubmit={HandleSubmit}>
-                <FormControl fullWidth>
+                <FormControl fullWidth sx={{mb: 2}}>
                     <TextField
                         label="Tên Giáo Viên"
                         variant="outlined"
@@ -143,7 +161,7 @@ function FormInforTeacher(props) {
                         error={!!errors.fullName}
                     />
                 </FormControl>
-                <FormControl sx={{ width: '48%' }}>
+                <FormControl sx={{ width: '48%', mb:2 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Ngày Sinh"
@@ -170,11 +188,11 @@ function FormInforTeacher(props) {
                         error={!!errors.phoneNumber}
                     />
                 </FormControl>
-                <FormControl sx={{ width: '25%', marginTop: '8px' }}>
+                <FormControl sx={{ width: '25%', marginTop: '16px' }}>
                     <Levels levelSelected={formData.level} onChangeLevel={handleLevelChange}
                     ></Levels>
                 </FormControl>
-                <FormControl sx={{ width: '70%', marginLeft: '5%' }} >
+                <FormControl sx={{ width: '70%', marginLeft: '5%',mb:3 }} >
                     <TextField
                         label="Email Giáo Viên"
                         type='email'
@@ -191,7 +209,7 @@ function FormInforTeacher(props) {
                     Thêm
                 </Button> :
                     <Button type="submit" variant="contained" color="primary" sx={{ width: '50%', padding: "10px", margin: 'auto', display: 'block' }}>
-                        Cập Nhật
+                        Cập Nhật Thông Tin
                     </Button>
                 }
                 <Snackbar

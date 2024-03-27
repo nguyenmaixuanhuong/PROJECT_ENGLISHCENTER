@@ -20,7 +20,7 @@ export default function MenuAppBar() {
             <AppBar position="static">
                 <Toolbar className='appbar'>
                     <Typography ml={5} variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        OceanEngLish
+                       
                     </Typography>
                     {(
                         <div className='d-flex align-items-center'>

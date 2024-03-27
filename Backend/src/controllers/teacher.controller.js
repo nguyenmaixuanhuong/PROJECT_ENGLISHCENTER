@@ -16,7 +16,7 @@ exports.createTeacher = async (req, res, next) => {
             else {
                 const TeacherCode = generateCode(6);
                 const username = `GV${TeacherCode}`
-                const password = generateCode(8);
+                const password = inforTeacher.phoneNumber
                 const AccountTeacher = await new Account({
                     username,
                     password,

@@ -11,8 +11,31 @@
     }
     .navbar_responsive{
         position: relative;
-        display: block; 
-        top: -3rem;
+        display: flex; 
+        top: 2.5rem;
 
     }
+}
+.navbar_fullscreen{
+    min-height: 100vh;
+    width: 100%;
+    background-color: rgb(240, 251, 255);
+}
+.container_navbar{
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.nav-item{
+    padding: 10px;
+    .nav-link{
+        color: rgb(16, 0, 93);
+        font-weight: 700;
+        border: none;
+    }
+   border-bottom: solid 1px rgb(166, 218, 255);
+}
+.nav_logo{
+    margin-top: 90px;
 }

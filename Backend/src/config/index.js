@@ -17,7 +17,8 @@ const config = {
         api_key: process.env.API_KEY,
         api_secret: process.env.API_SECRET,
         preset_name: process.env.PRESET_NAME
-    }
+    },
+    token_secret: process.env.TOKEN_SECRET
 }
 
 module.exports = config

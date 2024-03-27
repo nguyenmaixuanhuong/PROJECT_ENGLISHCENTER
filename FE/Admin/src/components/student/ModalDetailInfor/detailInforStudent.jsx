@@ -8,7 +8,7 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import Tooltip from '@mui/material/Tooltip';
 import { getStudent } from '../../../services/student.api'
 import useAuthCheck from '../../../context/useAuthCheck';
-import { format } from 'date-fns';
+import { useApp } from '../../../context/AppProvider';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -21,6 +21,7 @@ const style = {
 
 export default function DetailInforStudent(props) {
     useAuthCheck();
+    const {formatDate} = useApp();
     const [inforstudent, setInForStudent] = useState();
     useEffect(() => {
         async function fetchData() {
@@ -64,7 +65,7 @@ export default function DetailInforStudent(props) {
                                     Họ và tên: {inforstudent.fullName}
                                 </Typography>
                                 <Typography id="modal-modal-description" sx={{ mt: 2, ml: 2 }}>
-                                    Ngày sinh: {format(inforstudent.birthDay, 'dd/MM/yyyy')}
+                                    Ngày sinh: {formatDate(inforstudent.birthDay)}
                                 </Typography>
                                 <Typography id="modal-modal-description" sx={{ mt: 2, ml: 2 }}>
                                     Số điện thoại: {inforstudent.phoneNumber}
@@ -82,7 +83,7 @@ export default function DetailInforStudent(props) {
                                         Mã Học Viên: {inforstudent.account.username}
                                     </Typography>
                                     <Typography id="modal-modal-description" sx={{ mt: 2, ml: 2 }}>
-                                        Password: {inforstudent.account.password}
+                                        Password: {inforstudent.phoneNumber}
                                     </Typography>
                                 </div>
                                 <div className="infor-class ">

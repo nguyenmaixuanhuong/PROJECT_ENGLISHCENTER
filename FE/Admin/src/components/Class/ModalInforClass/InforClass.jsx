@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { IconButton, Typography } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
@@ -14,6 +14,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { createClass, updateClass } from '../../../services/class.api';
 import ListCourse from '../../course/ListCourse/ListCourse'
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -122,8 +124,7 @@ export default function InforClass(props) {
                 if (updateClass(props.class._id, formData)) {
                     setSuccessMessage('Cập nhật thông tin lớp học thành công!');
                     setOpenSnackbar(true);
-                    props.loadClasses();
-                    handleClose();
+                    // props.loadClasses();
                 }
                 else {
                     setSuccessMessage('Đã xảy ra lỗi, vui lòng thử lại!');
@@ -135,8 +136,7 @@ export default function InforClass(props) {
                     setSuccessMessage('Thêm thông tin lớp học thành công!');
                     setErrorMessage('')
                     setOpenSnackbar(true);
-                    props.loadClasses();
-                    handleClose();
+                    // props.loadClasses();
 
                 }
                 else {
@@ -153,7 +153,7 @@ export default function InforClass(props) {
     return (
         <div>
             {props.class ?
-                <Button variant='contained' onClick={handleOpen}> Cập nhật</Button>
+                <Button variant='text' sx={{ fontWeight: 700 }} onClick={handleOpen}> <EditIcon fontSize='small'></EditIcon>Cập nhật</Button>
                 :
                 <Tooltip title="Thêm lớp học">
                     <Fab onClick={handleOpen} color="success" aria-label="add" >
@@ -168,9 +168,13 @@ export default function InforClass(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ textAlign: 'center', marginBottom: 3 }}>
+                    <IconButton onClick={handleClose} sx={{float:'right', marginBottom: 3}}>
+                        <CloseIcon ></CloseIcon>
+                    </IconButton>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ textAlign: 'center',}}>
                         THÔNG TIN LỚP HỌC
                     </Typography>
+
                     <form onSubmit={HandleSubmit}>
                         <ListCourse courseSelected={formData?.course} onChangeCourse={handleCourseChange} ></ListCourse>
                         {errors.course &&

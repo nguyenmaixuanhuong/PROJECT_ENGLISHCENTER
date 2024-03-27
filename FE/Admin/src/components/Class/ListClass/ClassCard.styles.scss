@@ -1,5 +1,14 @@
-class-card{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+// class-card{
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-between;
+// }
+
+.class_name{
+    display: inline-block;
+    text-overflow: ellipsis;
+    width: 280px;
+    overflow: hidden;
+    white-space: nowrap;
 }
+

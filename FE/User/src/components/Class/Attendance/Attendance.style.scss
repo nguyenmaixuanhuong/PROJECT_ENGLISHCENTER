@@ -1,0 +1,29 @@
+.title-attendance{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    color: rgb(0, 100, 206);
+    border-bottom: 2px solid rgb(0, 100, 206);
+}
+.list-attendance{
+    margin: 20px;
+     display: flex;
+     flex-wrap: wrap;
+    .attendance{
+        background: linear-gradient(to top, #54d5f6, #331cc6);
+        width: fit-content;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+        margin-right: 20px;
+    }
+}
+
+.attend{
+    color: green
+}
+.absent{
+    color: rgb(210, 0, 0);
+}

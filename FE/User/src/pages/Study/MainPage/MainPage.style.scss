@@ -1,0 +1,14 @@
+.study_listclass {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    margin-top: 80px;
+}
+
+@media  (max-width:  972px) {
+    .study_listclass{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+ }

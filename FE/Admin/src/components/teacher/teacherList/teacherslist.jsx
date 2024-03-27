@@ -11,16 +11,18 @@ import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
 import './teacherslist.style.scss'
 import { Link } from 'react-router-dom';
+import {useApp} from '../../../context/AppProvider'
 function Row(props) {
     const { row } = props;
+    const {formatDate} = useApp()
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell component="th" scope="row">
+                <TableCell  align="center">
                     {row.account.username}
                 </TableCell>
                 <TableCell align="center">{row.fullName}</TableCell>
-                <TableCell align="center">{row.birthDay}</TableCell>
+                <TableCell align="center">{formatDate(row.birthDay)}</TableCell>
                 <TableCell align="center">{row.phoneNumber}</TableCell>
                 <TableCell align="center">{row.email}</TableCell>
                 <TableCell align="center">{row.level?.name}</TableCell>

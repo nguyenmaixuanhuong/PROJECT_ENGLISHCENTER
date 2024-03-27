@@ -30,7 +30,7 @@ export default function InputFileUpload({onChangeImage}) {
       tabIndex={-1}
       startIcon={<CloudUploadIcon />}
     >
-      Upload file
+      Upload Ảnh
       <VisuallyHiddenInput type="file"
       onChange={handleChangeImage}
       />
