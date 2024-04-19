@@ -31,7 +31,32 @@ const AccountSchema = mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
-    }
+    },
+    notifications:[{
+        information:{
+            type: Schema.Types.ObjectId,
+            ref:'Information',
+        },
+        action: {
+            type: String,
+        },
+        role: {
+            type: String,
+            enum: ['Teacher', 'Student']
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            refPath: 'notifications.role'
+        },
+        isChecked:{
+            type: Boolean,
+            default: false,
+        },
+        time:{
+            type: Date,
+            default: new Date()
+        }
+    }]
 })
 
 AccountSchema.pre('save', async function (next) {

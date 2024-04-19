@@ -14,8 +14,10 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import './EditorText.style.scss';
-import { createNews ,updateNews } from '../../services/information';
+import { createNews, updateNews } from '../../services/information';
 import Document from '../Class/Document/Document';
+import LinearProgress from '@mui/material/LinearProgress';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -26,7 +28,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-function EditorText({ handleClose, handleCloseModal, information, idclass, iduser, renderNews }) {
+function EditorText({ handleClose, handleCloseModal, information, idclass, iduser, renderNews, createExercises,handleChangeContent }) {
     const [value, setValue] = useState(0);
     const [text, setText] = useState('');
     const [listLinkSelected, setListLinkSelected] = useState([]);
@@ -34,6 +36,8 @@ function EditorText({ handleClose, handleCloseModal, information, idclass, iduse
     const quillRef = useRef(null);
     const [files, setFiles] = useState([]);
     const [open, setOpen] = React.useState(false);
+    const [loading, setLoading] = useState(false);
+
     const handleOpen = () => setOpen(true);
     const handleCloseModalLink = () => setOpen(false);
 
@@ -46,13 +50,15 @@ function EditorText({ handleClose, handleCloseModal, information, idclass, iduse
 
     const handleFileChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
+        setLoading(true);
         selectedFiles.forEach(async file => {
-            const fileUpload = await uploadFile(file,'document')
+            const fileUpload = await uploadFile(file, 'document')
             const urlFile = {
                 name: file.name,
                 ...fileUpload
             }
             setFiles((preFiles) => [...preFiles, urlFile]);
+            setLoading(false);
         });
     };
 
@@ -69,8 +75,7 @@ function EditorText({ handleClose, handleCloseModal, information, idclass, iduse
 
     const handleChangeLink = (e) => {
         const link = e.target.value;
-        setLink(link);
-
+        setLink(link);    
     }
     const handleRemoveLink = (link) => {
         setListLinkSelected((preLinks) =>
@@ -81,6 +86,7 @@ function EditorText({ handleClose, handleCloseModal, information, idclass, iduse
     const handleSubmitLink = () => {
         setListLinkSelected((preLink) => [...preLink, link]);
         setLink('')
+        
         handleCloseModalLink();
 
     };
@@ -88,7 +94,12 @@ function EditorText({ handleClose, handleCloseModal, information, idclass, iduse
 
     useEffect(() => {
         handleGetText();
-    }, [text])
+        if(handleChangeContent){
+            handleChangeContent('links',listLinkSelected);
+            handleChangeContent('documents',files);
+            handleChangeContent('description', quillRef.current.getEditor().root.innerHTML);
+        }
+    }, [text,files,listLinkSelected])
 
     const handleSaveNews = async () => {
         const news = {
@@ -114,7 +125,7 @@ function EditorText({ handleClose, handleCloseModal, information, idclass, iduse
             links: listLinkSelected,
             documents: files
         }
-        if (await updateNews(information._id,inforUpdate)) {
+        if (await updateNews(information._id, inforUpdate)) {
             handleCloseModal();
             renderNews();
         }
@@ -160,6 +171,7 @@ function EditorText({ handleClose, handleCloseModal, information, idclass, iduse
             />;
         </div>
 
+        {loading ? <div className="listfiles">  <LinearProgress /></div> : ''}
         <div className="listfiles">
             {files && files.map((file) => (
                 <div className="file-item">
@@ -230,29 +242,32 @@ function EditorText({ handleClose, handleCloseModal, information, idclass, iduse
                     </Modal>
                 </div>
             </Stack>
-            <div className="">
-                {information ?
-                    <Stack spacing={2} direction="row">
-                        <Button variant="text" onClick={handleCloseModal}>Hủy</Button>
-                        <Button
-                            onClick={handleUpdateNews}
-                            variant="contained"
-                            disabled={value > 1 ? false : true}>
-                            Cập nhật
-                        </Button>
-                    </Stack>
-                    :
-                    <Stack spacing={2} direction="row">
-                        <Button variant="text" onClick={handleClose}>Hủy</Button>
-                        <Button
-                            onClick={handleSaveNews}
-                            variant="contained"
-                            disabled={value > 1 ? false : true}>
-                            Đăng Tin
-                        </Button>
-                    </Stack>
-                }
-            </div>
+            {createExercises ? " "
+                :
+                <div className="">
+                    {information ?
+                        <Stack spacing={2} direction="row">
+                            <Button variant="text" onClick={handleCloseModal}>Hủy</Button>
+                            <Button
+                                onClick={handleUpdateNews}
+                                variant="contained"
+                                disabled={value > 1 ? false : true}>
+                                Cập nhật
+                            </Button>
+                        </Stack>
+                        :
+                        <Stack spacing={2} direction="row">
+                            <Button variant="text" onClick={handleClose}>Hủy</Button>
+                            <Button
+                                onClick={handleSaveNews}
+                                variant="contained"
+                                disabled={value > 1 ? false : true}>
+                                Đăng Tin
+                            </Button>
+                        </Stack>
+                    }
+                </div>
+            }
         </div>
     </div>
 

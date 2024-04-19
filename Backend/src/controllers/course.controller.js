@@ -1,4 +1,5 @@
 const Course = require('../models/course.model');
+const Class = require('../models/class.model');
 const RegisterCourse = require('../models/registerCourse.model');
 const validator = require('validator');
 const Level = require('../models/level.model');
@@ -8,7 +9,7 @@ exports.createCourse = async (req, res, next) => {
         await newCourse.save();
         res.status(200).send({ newCourse })
     } catch (error) {
-        
+
         res.status(400).send(error);
     }
 };
@@ -24,7 +25,7 @@ exports.listCourse = async (req, res, next) => {
 exports.listCourseWithCategory = async (req, res, next) => {
     const category = req.query.category
     try {
-        const courses = await Course.find({category: category})
+        const courses = await Course.find({ category: category })
         res.status(200).send(courses);
     } catch (error) {
         res.status(500).send('Server error', error);
@@ -54,7 +55,7 @@ exports.getCourse = async (req, res, next) => {
         const course = await Course.findById(id);
         res.status(200).send(course);
     } catch (error) {
-        res.status(500).send( error);
+        res.status(500).send(error);
     }
 }
 exports.deleteCourse = async (req, res, next) => {
@@ -114,3 +115,6 @@ exports.getLevel = async (req, res) => {
 
     }
 };
+
+
+

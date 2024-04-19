@@ -6,7 +6,7 @@ const InformationSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'Class',
     },
-    teacher:{
+    teacher: {
         type: Schema.Types.ObjectId,
         ref: 'Teacher',
     },
@@ -22,11 +22,30 @@ const InformationSchema = mongoose.Schema({
         publicId: String,
         url: String,
     }],
-    date:{
+    date: {
         type: Date,
         default: new Date(),
-    }
+    },
+    comments: [{
+        comment: String,
+        userType: {
+            type: String,
+            enum: ['Teacher', 'Student']
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            refPath: 'comments.userType'
+        },
+        account: {
+            type: Schema.Types.ObjectId,
+            ref: 'Account',
+        },
+        date: {
+            type: Date,
+            default: new Date(),
+        }
+    }]
 })
 
-const Information = mongoose.model('Information',InformationSchema)
+const Information = mongoose.model('Information', InformationSchema)
 module.exports = Information;

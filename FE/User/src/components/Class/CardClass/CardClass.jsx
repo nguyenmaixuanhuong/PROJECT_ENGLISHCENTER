@@ -5,9 +5,15 @@ import { CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom'
 import './CardClass.style.scss';
 import AlarmOnIcon from '@mui/icons-material/AlarmOn';
+import {useDispatch} from 'react-redux';
+import { removeNotify } from '../../../store/NotifiySlice';
 export default function CardClass(props) {
+  const dispatch = useDispatch();
+  const clearNotify = ()=>{
+    dispatch(removeNotify());
+  }
   return (
-    <Link className='text-direction_none' to={`/class/${props.class._id}`}>
+    <Link className='text-direction_none' to={`/class/${props.class._id}`} onClick={clearNotify}>
       <Card sx={{ maxWidth: 320, height: 300, mr: 5, mb: 5, borderRadius: 2 }}>
         <CardActionArea >
           <div className="cart-content">

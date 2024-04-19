@@ -13,6 +13,7 @@ import PersonInfor from "../pages/Study/PersonInfor/PersonInfor.jsx";
 import Schedule from "../pages/Study/SchedulePage/Schedule.jsx";
 import TeacherPage from "../pages/TeacherPage/TeacherPage.jsx";
 import AboutPage from "../pages/About/AboutPage.jsx";
+import DetailAssignment from "../components/Class/Exercise/DetailAssignment.jsx";
 const routes = [
     {path: '/', page: HomePage, layout:HomeLayout},
     {path: '/about', page: AboutPage},
@@ -25,6 +26,7 @@ const routes = [
     {path: '/document', page: Document, layout: LoginLayout},
     {path: '/person', page: PersonInfor, layout: DefaultLayoutStudy},
     {path: '/schedule', page: Schedule, layout: DefaultLayoutStudy},
+    {path: '/assignment/:id', page: DetailAssignment, layout: DefaultLayoutStudy},
 
 ]
 

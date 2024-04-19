@@ -41,7 +41,7 @@ function Attendance({ classCurrent }) {
             setAttendances(attendances)
         }
         fetchAttendance();
-    }, [classCurrent._id])
+    }, [classCurrent?._id])
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -83,6 +83,7 @@ function Attendance({ classCurrent }) {
         }
     };
 
+    console.log(selectedRows);
     const saveAttdance = () => {
         const attendance = {
             class: classCurrent._id,

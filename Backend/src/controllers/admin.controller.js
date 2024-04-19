@@ -4,7 +4,7 @@ const Student = require('../models/student.model')
 const Teacher = require('../models/teacher.model');
 const Register = require("../models/register.model");
 const Class = require('../models/class.model')
-
+const Course = require('../models/course.model');
 exports.loginAdmin = async (req, res, next) => {
    const { username, password } = req.body;
    if (!(username && password)) {
@@ -20,15 +20,54 @@ exports.loginAdmin = async (req, res, next) => {
    }
 };
 
+async function calculateTotalStudentsForCourse(courseId) {
+   try {
+      const result = await Class.aggregate([
+         {
+            $match: {
+               course: courseId
+            }
+         },
+         {
+            $group: {
+               _id: null,
+               totalStudents: { $sum: { $size: "$students" } } // Tính tổng số học sinh trong tất cả các lớp học
+            }
+         }
+      ]);
+
+      if (result.length > 0) {
+         return result[0].totalStudents;
+      } else {
+         return 0;
+      }
+   } catch (error) {
+      console.error("Error calculating total students for course:", error);
+      throw error;
+   }
+}
+
+
 exports.overView = async (req, res) => {
    try {
       const numberStudent = await Student.countDocuments();
       const numberTeacher = await Teacher.countDocuments();
-      const registers = await Register.find({isContacted: false});
+      const registers = await Register.find({ isContacted: false });
       const numberRegister = registers.length;
       const numberClass = await Class.countDocuments();
-      return res.status(200).send({
-         numberClass, numberRegister, numberStudent, numberTeacher
+      const dataSet = []
+      const courses = await Course.find({})
+      for (const element of courses) {
+         const sum = await calculateTotalStudentsForCourse(element._id);
+         const item = {
+            label: element.courseName,
+            numberStudent: sum
+         }
+         dataSet.push(item);
+      }
+
+       res.status(200).send({
+         numberClass, numberRegister, numberStudent, numberTeacher,dataSet
       })
    } catch (error) {
       res.status(500).send(error);
@@ -36,6 +75,7 @@ exports.overView = async (req, res) => {
 
 
 }
+
 
 exports.deactivedAccount = async (req, res) => {
 

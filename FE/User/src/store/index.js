@@ -2,6 +2,8 @@ import {combineReducers, configureStore} from "@reduxjs/toolkit"
 import storage from "redux-persist/lib/storage";
 import userReducer from "./UserSlice";
 import ClassSlice from "./ClassSlice";
+import NotifiySlice from "./NotifiySlice";
+import TabSlice from "./TabSlice";
 import {
     persistStore,
     persistReducer,
@@ -22,7 +24,9 @@ const persistConfig = {
   
   const rootReducer = combineReducers({
     user: userReducer,
-    classes: ClassSlice
+    classes: ClassSlice,
+    notify: NotifiySlice,
+    tab: TabSlice
   });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

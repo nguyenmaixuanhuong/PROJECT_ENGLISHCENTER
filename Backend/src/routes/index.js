@@ -10,6 +10,7 @@ const authRouter = require('../routes/auth.route');
 const attendanceRouter = require('../routes/attendance.route');
 const informationRouter = require('../routes/information.route');
 const accountRouter = require('../routes/account.route');
+const assignmentsRouter = require('../routes/assignment.route');
 function route(app){
     app.use("/admin/course", courseRouter)
     app.use("/admin", adminRouter)
@@ -23,6 +24,7 @@ function route(app){
     app.use("/attendance", attendanceRouter)
     app.use("/information", informationRouter)
     app.use("/account", accountRouter)
+    app.use("/assignment", assignmentsRouter)
 }
 
 module.exports = route;

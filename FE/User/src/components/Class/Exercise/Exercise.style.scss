@@ -1,0 +1,81 @@
+.exercise-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    color: rgb(136, 136, 136);
+}
+.exercise-body_left{
+    background-color: rgb(251, 251, 251);
+    padding: 20px;
+    border: 1px solid rgb(216, 216, 216);
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.exercise-body_right{
+    padding: 20px;
+}
+
+.assigment{
+    border: 1px solid rgb(216, 216, 216);
+    margin: 20px auto;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    p {
+        margin-bottom: 0;
+    }
+    .title{
+        font-weight: 600;
+        color: rgb(49, 67, 148);
+    }
+
+    .description{
+        background-color: aliceblue;
+        min-height: 100px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+.assigment-detail {
+    margin-top: 80px;
+
+    .assignment-body_left{
+        background-color: rgb(243, 243, 243);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 2px 2px 5px rgb(198, 198, 198);
+        margin-top: 20px;
+    }
+
+    .assignment-body_right{
+        padding: 20px 40px;
+    }
+
+    .assignment-header{
+        padding: 10px 0 10px;
+        border-bottom: 1px solid rgb(128, 128, 128);
+    }
+}
+
+.submit-item{
+    background-color: rgb(255, 255, 255);
+    padding: 15px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 2px grey;
+    border-left: 4px solid rgb(0, 139, 219);
+}
+
+.mark{
+    padding:  20px;
+    margin: 10px 10px;
+    background-color: rgb(244, 244, 244);
+}

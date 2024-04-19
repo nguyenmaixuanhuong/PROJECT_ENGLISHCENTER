@@ -7,4 +7,8 @@ router.post('/create',informationController.create)
 router.get('/getlistinfor',informationController.listInformation);
 router.delete('/delete',informationController.deleteInformation)
 router.post('/update',informationController.updateInformation)
+router.post('/addcomment',informationController.addComment);
+router.get('/deletecomment',informationController.deleteComment);
+router.get('/notifications',informationController.listNotifications);
+router.get('/checked',informationController.checkedNotify);
 module.exports = router

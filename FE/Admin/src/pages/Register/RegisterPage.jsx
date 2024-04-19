@@ -61,9 +61,9 @@ export default function RegisterPage() {
                                 <TableCell align="center">{row.course.courseName} ({row.course.category})</TableCell>
                                 {
                                     row.isContacted ?
-                                        <TableCell align="center">Đã xác nhận</TableCell>
+                                        <TableCell align="center">Đã liên hệ</TableCell>
                                         :
-                                        <TableCell align="center"><Button onClick={()=>{confirmContacted(row._id)}} variant='contained'>Xác Nhận</Button></TableCell>
+                                        <TableCell align="center"><Button onClick={()=>{confirmContacted(row._id)}} variant='contained' color='success'>Liên hệ</Button></TableCell>
                                 }
                             </TableRow>
                         ))}

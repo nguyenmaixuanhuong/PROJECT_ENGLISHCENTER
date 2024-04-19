@@ -22,10 +22,10 @@ function Document({file}) {
     </div>;
     }
     else {
-        document = <div className="document-item">
-            <img src="/assets/image/other/new-document.png" width={50} height={50} alt="" />
-            <p>{file.name}</p>
-        </div>;
+            document = <div className="document-item">
+                <img src="/assets/image/other/new-document.png" width={50} height={50} alt="" />
+                <p className='filename'>{file.name}</p>
+            </div>;
     }
 
     return (

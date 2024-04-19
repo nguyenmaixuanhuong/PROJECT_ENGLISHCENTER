@@ -4,7 +4,9 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-
+import SaveIcon from '@mui/icons-material/Save';
+import { updateAttendance } from '../../../services/attendance';
+import { useSelector } from 'react-redux'
 const style = {
     position: 'absolute',
     top: '50%',
@@ -19,30 +21,72 @@ const style = {
 const columns = [
     { field: 'username', headerName: 'Mã học viên', width: 180 },
     { field: 'fullName', headerName: 'Họ và tên ', width: 200 },
-    { field: 'attend', headerName: 'Điểm danh', width: 100 },
+
 ];
 
 export default function Attendance_Detail({ students, attendance, index }) {
+    const role = useSelector((state) => state.user?.role)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [selectedRows, setSelectedRows] = React.useState(attendance.attendees);
     const [attendees, setAttendees] = React.useState([]);
     React.useEffect(() => {
         if (students) {
             const rows = students.map((student) => {
                 if (attendance.attendees.includes(student._id)) {
-                    return { "id": student._id, "username": student.account.username, "fullName": student.fullName, "attend": 'Có mặt', 'className': 'attend' }
+                    return { "id": student._id, "username": student.account.username, "fullName": student.fullName, }
                 }
                 else {
-                    return { "id": student._id, "username": student.account.username, "fullName": student.fullName, "attend": 'Vắng', 'className': 'absent' }
+                    return { "id": student._id, "username": student.account.username, "fullName": student.fullName, }
                 }
             })
             setAttendees(rows);
         }
     }, [students])
-    const getRowClassName = (params) => {
-        return params.row.className || '';
+
+    const handleCheckboxChange = (event, rowId) => {
+        const isChecked = event.target.checked;
+        if (isChecked) {
+            setSelectedRows((prevSelectedRows) => [...prevSelectedRows, rowId]);
+        } else {
+            setSelectedRows((prevSelectedRows) =>
+                prevSelectedRows.filter((id) => id !== rowId)
+            );
+        }
     };
+
+    const updateCurrentAttendance = async () => {
+        const result = await updateAttendance(attendance._id, selectedRows)
+        console.log(result);
+        if (result === 200) {
+            handleClose();
+        }
+        else {
+            alert('Đã có lỗi xảy ra')
+        }
+    }
+
+
+    const updatedColumns = [...columns];
+    updatedColumns.push({
+        field: 'attendance',
+        headerName: 'Điểm danh',
+        width: 100,
+        sortable: false,
+        disableColumnMenu: true,
+        renderCell: (params) => (
+            <input
+                type="checkbox"
+                disabled={role === 'Student'}
+                style={{ marginLeft: '20px', width: '20px', height: '20px' }}
+                checked={selectedRows.includes(params.row.id)}
+                onChange={(event) => handleCheckboxChange(event, params.row.id)}
+            />
+        ),
+    });
+
+
     return (
         <div>
             <div onClick={handleOpen} className="attendance">
@@ -69,16 +113,24 @@ export default function Attendance_Detail({ students, attendance, index }) {
                         <div style={{ height: 400, width: '100%' }}>
                             <DataGrid sx={{ textAlign: 'center', fontSize: 18 }}
                                 rows={attendees}
-                                columns={columns}
+                                columns={updatedColumns}
                                 hideFooterPagination
                                 hideFooterSelectedRowCount
-                                getRowClassName={getRowClassName}
+                                selectionModel={selectedRows}
                             />
                         </div>
                     </Typography>
-                    <Button color='warning' variant='contained' onClick={handleClose} sx={{ float: 'right', mt: 1 }}>
+                    {role === 'Teacher' ?
+                        <Button sx={{ float: 'right', mt: 1 }} onClick={updateCurrentAttendance}>
+                            <SaveIcon fontSize='large'></SaveIcon>
+                            <h6 className='mt-3'>Lưu</h6>
+                        </Button>
+                        : ''
+                    }
+                    <Button color='warning' onClick={handleClose} sx={{ float: 'right', mt: 3 }}>
                         Close
                     </Button>
+
                 </Box>
             </Modal>
         </div>

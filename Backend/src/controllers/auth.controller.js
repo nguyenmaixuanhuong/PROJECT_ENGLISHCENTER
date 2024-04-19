@@ -16,14 +16,23 @@ exports.login = async (req, res) => {
         const user = await Account.findOne({ username: username })
         if (user) {
             const auth = await bcrypt.compare(password, user.password);
+            
             if (auth) {           
                 const token = this.createToken(user._id)
                 let userInfor;
                 if (user.role === 'Student') {
-                    userInfor = await Student.findOne({ account: user._id }).populate('account', '-password')
+                    userInfor = await Student.findOne({ account: user._id }).populate({
+                        path: 'account',
+                        select:'-password',
+                        populate:'notifications.information'
+                    })
                 }
                 else {
-                    userInfor = await Teacher.findOne({ account: user._id }).populate('account', '-password')
+                    userInfor = await Teacher.findOne({ account: user._id }).populate({
+                        path: 'account',
+                        select:'-password',
+                        populate:'notifications.information'
+                    })
                 }
                 res.header('Authorization', `Bearer ${token}`);
                 res.status(200).send({token:token, infor: userInfor });

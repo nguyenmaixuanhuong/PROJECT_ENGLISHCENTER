@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Assignments = require('./assignments.model');
 const {Schema} = mongoose;
 
 const classSchema = mongoose.Schema({
@@ -35,6 +36,10 @@ const classSchema = mongoose.Schema({
     attendances:[{
         type: Schema.Types.ObjectId,
         ref: 'Attendance',
+    }],
+    assignments:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Assignments',
     }],
     isFinish:{
         type: Boolean,

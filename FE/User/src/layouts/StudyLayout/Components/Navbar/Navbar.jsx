@@ -19,13 +19,16 @@ import { getClasses } from '../../../../store/ClassSlice'
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import './Navbar.style.scss';
+import { removeNotify } from '../../../../store/NotifiySlice';
 export default function NavBar() {
     const [classes, setClasses] = React.useState([])
     const dispatch = useDispatch();
     const role = useSelector((state) => state.user.role)
     const user = useSelector((state) => state.user.user)
     const fullName = useSelector((state) => state.user.user?.fullName)
-
+    const clearNotify = () => {
+        dispatch(removeNotify());
+    }
     React.useEffect(() => {
         const obj = { id: user._id, role: role }
         dispatch(getClasses(obj)).then((result) => {
@@ -76,7 +79,7 @@ export default function NavBar() {
                         <ListItemText>Các lớp học</ListItemText>
                     </MenuItem>
                     {classes && classes.map(item => (
-                        <Link className='text-direction_none ' to={`/class/${item._id}`}>
+                        <Link className='text-direction_none ' to={`/class/${item._id}`} onClick={clearNotify}>
                             <MenuItem className='class-item' sx={{ paddingLeft: 4 }}>
                                 <ListItemText >{item.className}</ListItemText>
                             </MenuItem>
@@ -116,7 +119,7 @@ export default function NavBar() {
                             <ListItemText>Các lớp học</ListItemText>
                         </MenuItem>
                         {classes && classes.map(item => (
-                            <Link className='text-direction_none' to={`/class/${item._id}`} >
+                            <Link className='text-direction_none' to={`/class/${item._id}`} onClick={clearNotify} >
                                 <MenuItem className='class-item' sx={{ paddingLeft: 4 }}>
                                     <ListItemText>{item.className}</ListItemText>
                                 </MenuItem>

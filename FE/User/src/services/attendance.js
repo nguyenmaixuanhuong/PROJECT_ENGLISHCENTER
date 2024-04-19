@@ -8,6 +8,16 @@ export const createAttendance = async (infor) => {
     }        
 }
 
+export const updateAttendance = async (id,attendees) => {
+    try {
+        const response = await API().post('/attendance/update',{id:id,attendees:attendees});
+        return response.status;
+    } catch (error) {
+        return error.response.status
+    }        
+}
+
+
 export const listAttendance = async (id) => {
     try {
         const response = await API().get('/attendance/listattendances',{params:{id:id}});
