@@ -1,0 +1,9 @@
+@import 'normalize.css';
+* {
+  box-sizing: border-box;
+  font-family: "Roboto Condensed", sans-serif !important;
+}
+
+.text-direction_none {
+  text-decoration: none;
+}/*# sourceMappingURL=index.css.map */

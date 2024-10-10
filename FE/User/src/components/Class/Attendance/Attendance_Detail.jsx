@@ -24,7 +24,7 @@ const columns = [
 
 ];
 
-export default function Attendance_Detail({ students, attendance, index }) {
+export default function Attendance_Detail({ students, attendance, index, isFinish }) {
     const role = useSelector((state) => state.user?.role)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -78,7 +78,7 @@ export default function Attendance_Detail({ students, attendance, index }) {
         renderCell: (params) => (
             <input
                 type="checkbox"
-                disabled={role === 'Student'}
+                disabled={role === 'Student' || isFinish}
                 style={{ marginLeft: '20px', width: '20px', height: '20px' }}
                 checked={selectedRows.includes(params.row.id)}
                 onChange={(event) => handleCheckboxChange(event, params.row.id)}
@@ -117,10 +117,11 @@ export default function Attendance_Detail({ students, attendance, index }) {
                                 hideFooterPagination
                                 hideFooterSelectedRowCount
                                 selectionModel={selectedRows}
+
                             />
                         </div>
                     </Typography>
-                    {role === 'Teacher' ?
+                    {role === 'Teacher' && !isFinish ?
                         <Button sx={{ float: 'right', mt: 1 }} onClick={updateCurrentAttendance}>
                             <SaveIcon fontSize='large'></SaveIcon>
                             <h6 className='mt-3'>Lưu</h6>

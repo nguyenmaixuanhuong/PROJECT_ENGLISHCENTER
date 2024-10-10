@@ -1,0 +1,81 @@
+.select_course {
+  position: relative;
+  top: -130px;
+  width: 200px;
+  justify-content: center;
+  width: 100%;
+  z-index: 10;
+}
+.select_course .select_course-header {
+  box-shadow: 2px 2px 10px grey;
+  background-color: #001567;
+  padding: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: white;
+  text-align: center;
+}
+.select_course .select_course-search {
+  box-shadow: 2px 2px 10px grey;
+  padding: 20px 30px;
+  background-color: aliceblue;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.select_course .select_course-search .css-b62m3t-container {
+  width: 70%;
+}
+
+.content_item {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.content_item .content_introduce h4 {
+  color: #001567;
+  font-weight: 700;
+}
+.content_item .content_introduce h3 {
+  font-weight: 700;
+  color: rgb(187, 20, 26);
+}
+.content_item .content_introduce p {
+  font-weight: 700;
+}
+.content_item .content_introduce span {
+  font-style: italic;
+}
+.content_item .content_image {
+  padding: 0;
+}
+.content_item .content_image :hover {
+  border: 1px solid transparent;
+  box-shadow: 2px 2px 10px rgb(164, 164, 164);
+}
+.content_item .content_image img {
+  max-width: 100%;
+}
+
+.tab-item {
+  width: 100%;
+  margin-left: 30px !important;
+  font-weight: 700 !important;
+}
+
+.tab-content {
+  background-color: rgb(0, 57, 106);
+}
+.tab-content .tab-content_img img {
+  max-width: 100%;
+  max-height: 200px;
+}
+.tab-content .tab-content_introduce {
+  color: white;
+  text-align: justify;
+  margin-top: 20px;
+}
+
+.introduce_course {
+  margin-top: 50px;
+}/*# sourceMappingURL=homepage.style.css.map */

@@ -20,6 +20,8 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import './Navbar.style.scss';
 import { removeNotify } from '../../../../store/NotifiySlice';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import Cookies from 'js-cookie';
 export default function NavBar() {
     const [classes, setClasses] = React.useState([])
     const dispatch = useDispatch();
@@ -41,19 +43,19 @@ export default function NavBar() {
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     }
+    const handleClick = (event) => {
+        event.preventDefault();
 
+        // Thiết lập cookies
+        Cookies.set('role', role, { path: '/', secure: true, sameSite: 'Strict' });
+        Cookies.set('userId', user._id, { path: '/', secure: true, sameSite: 'Strict' });
+
+        // Chuyển hướng đến trang khác
+        window.location.href = 'http://localhost:8000/exams';
+    };
     const DrawerList = (
         <Box sx={{ width: 300 }} role="presentation" onClick={toggleDrawer(false)}>
             <Paper sx={{ height: "100%" }}>
-                <div className="navbar-infor">
-                    <Typography variant="body1" color={'white'} sx={{ display: 'inline', alignSelf: 'center' }} >
-                        {fullName}
-                    </Typography>
-                    <IconButton sx={{ p: 0 }}>
-                        <Avatar alt="Remy Sharp" src={user.account?.avatar.url} />
-                    </IconButton>
-                </div>
-                <Divider />
                 <MenuList sx={{ height: "100%" }}>
                     <Link className='text-direction_none text-dark' to='/study' >
                         <MenuItem className='menu-item'>
@@ -71,6 +73,19 @@ export default function NavBar() {
                             <ListItemText>Thời khóa biểu</ListItemText>
                         </MenuItem>
                     </Link>
+                    <a className='text-direction_none text-dark' onClick={handleClick} href='http://localhost:8000/exams'>
+                        <MenuItem className='menu-item'>
+                            <ListItemIcon>
+                                <FactCheckIcon color="success" />
+                            </ListItemIcon>
+                            {role === "Teacher" ?
+                                <ListItemText>Tạo đề kiểm tra</ListItemText>
+                                :
+                                <ListItemText>Bài kiểm tra</ListItemText>
+
+                            }
+                        </MenuItem>
+                    </a>
                     <Divider />
                     <MenuItem className='menu-item'>
                         <ListItemIcon>
@@ -93,6 +108,7 @@ export default function NavBar() {
     return (
         <div className="">
             <div className="navbar-fullwight">
+                {/* {DrawerList} */}
                 <Paper className='nav-list'>
                     <MenuList sx={{ height: "100%" }}>
                         <Link className='text-direction_none text-dark' to='/study' >
@@ -111,6 +127,19 @@ export default function NavBar() {
                                 <ListItemText>Thời khóa biểu</ListItemText>
                             </MenuItem>
                         </Link>
+                        <a className='text-direction_none text-dark' onClick={handleClick} href={`http://localhost:8000/exams`}>
+                            <MenuItem className='menu-item'>
+                                <ListItemIcon>
+                                    <FactCheckIcon color="success" />
+                                </ListItemIcon>
+                                {role === "Teacher" ?
+                                    <ListItemText>Tạo đề kiểm tra</ListItemText>
+                                    :
+                                    <ListItemText>Bài kiểm tra</ListItemText>
+
+                                }
+                            </MenuItem>
+                        </a>
                         <Divider />
                         <MenuItem className='menu-item'>
                             <ListItemIcon>
@@ -133,6 +162,15 @@ export default function NavBar() {
                 <div>
                     <Button onClick={toggleDrawer(true)}><MenuIcon sx={{ color: 'white', fontSize: 30 }} /></Button>
                     <Drawer open={open} onClose={toggleDrawer(false)}>
+                        <div className="navbar-infor">
+                            <Typography variant="body1" color={'white'} sx={{ display: 'inline', alignSelf: 'center' }} >
+                                {fullName}
+                            </Typography>
+                            <IconButton sx={{ p: 0 }}>
+                                <Avatar alt="Remy Sharp" src={user.account?.avatar.url} />
+                            </IconButton>
+                        </div>
+                        <Divider />
                         {DrawerList}
                     </Drawer>
                 </div>

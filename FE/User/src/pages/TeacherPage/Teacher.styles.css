@@ -1,0 +1,43 @@
+.teacher-container {
+  margin-top: 125px;
+}
+.teacher-container .teacher-header {
+  background-color: aliceblue;
+  padding: 30px 0;
+  padding-left: 100px;
+}
+.teacher-container .teacher-header .teacher-title {
+  font-weight: 600;
+  color: #001567;
+}
+.teacher-container .teacher-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.card-container {
+  background-color: #e8f8ff;
+}
+.card-container .card-content {
+  width: 300px;
+}
+.card-container .card-content .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-container .card-content .card-header .card-infor {
+  margin-top: 30px;
+}
+.card-container .card-content .card-maxim {
+  border-bottom: 1px solid rgb(243, 243, 243);
+  text-align: center;
+  font-style: italic;
+}
+
+.card-container:hover {
+  background: #0072a2;
+  color: white;
+  transition: all 0.5s ease-in-out;
+}/*# sourceMappingURL=Teacher.styles.css.map */

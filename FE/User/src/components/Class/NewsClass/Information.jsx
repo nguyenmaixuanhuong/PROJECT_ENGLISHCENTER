@@ -15,8 +15,8 @@ import SendIcon from '@mui/icons-material/Send';
 import UpdateEditorText from '../../EditorText/UpdateEditorText';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import { addComment,deleteComment } from '../../../services/information';
-function Information({ information, renderNews, role, handleDeleteNews, user }) {
+import { addComment, deleteComment } from '../../../services/information';
+function Information({ information, renderNews, role, handleDeleteNews, user, isFinish }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [comment, setComment] = useState('');
     const [sucess, setSucess] = useState(true);
@@ -155,12 +155,12 @@ function Information({ information, renderNews, role, handleDeleteNews, user }) 
                         <div className="comment-item_info">
                             <div className="d-flex justify-content-between">
                                 <p className='nameUser'>{item.user?.fullName}</p>
-                                {item.user._id === user._id ?                             
-                                <Tooltip title="Xóa bình luận">
-                                    <HighlightOffIcon color='info' fontSize='small' onClick={()=>{handleDeleteComment(item._id)}} />
-                                </Tooltip>
-                                : ''
-                            }
+                                {item.user._id === user._id && !isFinish ?
+                                    <Tooltip title="Xóa bình luận">
+                                        <HighlightOffIcon color='info' fontSize='small' onClick={() => { handleDeleteComment(item._id) }} />
+                                    </Tooltip>
+                                    : ''
+                                }
                             </div>
                             <p className='date'>{new Date(item.date).toLocaleString()}</p>
                             <p className='comment-content'>{item.comment}</p>
@@ -179,6 +179,7 @@ function Information({ information, renderNews, role, handleDeleteNews, user }) 
                     value={comment}
                     onChange={(e) => handleChangeComment(e.target.value)}
                     id={information._id}
+                    disabled={isFinish}
                 />
                 {comment ? <SendIcon onClick={() => {
                     handleAddComment();

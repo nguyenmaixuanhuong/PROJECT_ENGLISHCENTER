@@ -5,11 +5,11 @@ import { CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom'
 import './CardClass.style.scss';
 import AlarmOnIcon from '@mui/icons-material/AlarmOn';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { removeNotify } from '../../../store/NotifiySlice';
 export default function CardClass(props) {
   const dispatch = useDispatch();
-  const clearNotify = ()=>{
+  const clearNotify = () => {
     dispatch(removeNotify());
   }
   return (
@@ -23,10 +23,14 @@ export default function CardClass(props) {
           </div>
           <div className="cart-detail">
             <div className='date-class'>
-              <p><AlarmOnIcon fontSize='small' color='success'/> Ngày bắt đầu: {new Date(props.class.startDay).toLocaleDateString('vi-VN')}</p>
-              <p> <AlarmOnIcon fontSize='small' color='error'/> Ngày kết thúc: {new Date(props.class.finishDay).toLocaleDateString('vi-VN')}</p>
+              <p><AlarmOnIcon fontSize='small' color='success' /> Ngày bắt đầu: {new Date(props.class.startDay).toLocaleDateString('vi-VN')}</p>
+              <p> <AlarmOnIcon fontSize='small' color='error' /> Ngày kết thúc: {new Date(props.class.finishDay).toLocaleDateString('vi-VN')}</p>
             </div>
-            <p className='numberSession'>Số buổi đã diễn ra: {props.class.attendances?.length}</p>
+            {props.class.isFinish
+              ? <p className='numberSession'>Lớp học đã kết thúc</p>
+              : <p className='numberSession'>Số buổi đã diễn ra: {props.class.attendances?.length}</p>
+            }
+
           </div>
         </CardActionArea>
       </Card>

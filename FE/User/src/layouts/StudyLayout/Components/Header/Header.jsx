@@ -37,7 +37,7 @@ function Header() {
     }
     return (
         <AppBar position="fixed">
-            <Container className='study_header' maxWidth="xl">
+            <Container className='study_header' maxWidth="xxl">
                 <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div className="study_logo">
                         <img src="./assets/image/logo/logo.png" alt="" width={90} />
@@ -50,11 +50,11 @@ function Header() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Notifications />
                         <Typography variant="body2" sx={{ display: 'inline', paddingRight: 1, ml: 2 }} >
-                            {user.fullName}
+                            {user?.fullName}
                         </Typography>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={user.fullName} src={user.account.avatar ? user.account.avatar.url : ''} />
+                                <Avatar alt={user?.fullName} src={user?.account.avatar ? user?.account.avatar.url : ''} />
                             </IconButton>
                         </Tooltip>
                         <Menu

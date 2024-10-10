@@ -1,0 +1,41 @@
+.editor-news {
+  padding: 20px;
+  box-shadow: 2px 2px 10px rgb(203, 203, 203);
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+}
+.editor-news .editor-text .ql-editor {
+  background-color: rgb(242, 250, 255);
+}
+.editor-news .upload-link {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-left: 10px;
+}
+
+.listlink {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.listlink .link-item {
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 10px rgb(236, 236, 236);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.listlink .link-item a {
+  align-self: center;
+}
+
+.listfiles {
+  margin-top: 30px;
+}
+.listfiles .file-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  box-shadow: 2px 2px 10px rgb(236, 236, 236);
+}/*# sourceMappingURL=EditorText.style.css.map */

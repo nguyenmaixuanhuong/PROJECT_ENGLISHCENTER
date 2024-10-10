@@ -1,0 +1,21 @@
+.participants {
+  padding: 20px 100px;
+}
+.participants .title {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  color: rgb(0, 100, 206);
+  border-bottom: 2px solid rgb(0, 100, 206);
+}
+.participants .listteacher, .participants .liststudent {
+  margin: 20px 0 0 30px;
+}
+.participants .listteacher .name_participant, .participants .liststudent .name_participant {
+  align-self: center;
+  margin-top: 5px;
+}
+
+.students {
+  margin-top: 10px;
+}/*# sourceMappingURL=ListParticipants.style.css.map */

@@ -1,0 +1,105 @@
+.newsclass .poster-class {
+  padding: 100px 50px;
+  color: white;
+  background-image: url("https://gstatic.com/classroom/themes/img_backtoschool.jpg");
+  width: 100%;
+  border-radius: 10px;
+  max-height: 200px;
+}
+
+.post-news {
+  padding: 20px 50px;
+  margin: 0 auto;
+  margin-top: 20px;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 2px 2px 10px rgb(221, 221, 221);
+}
+
+.post-news:hover {
+  cursor: pointer;
+  background-color: rgb(239, 247, 255);
+}
+
+.title-news {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  color: rgb(0, 100, 206);
+  border-bottom: 2px solid rgb(0, 100, 206);
+}
+
+.infor-item {
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid rgb(226, 226, 226);
+  border-radius: 10px;
+}
+
+.infor-user {
+  display: flex;
+  justify-content: space-between;
+}
+.infor-user .user {
+  padding: 0 20px;
+}
+
+.list-document {
+  display: flex;
+  margin-left: 20px;
+  width: 100%;
+}
+
+.infor-links {
+  margin-top: 20px;
+  padding: 0 20px 20px 20px;
+}
+
+.infor-comment {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+}
+.infor-comment .input-comment {
+  margin-left: 10px;
+}
+
+.list-comment {
+  margin: 10px 60px;
+}
+.list-comment .comment-item {
+  display: flex;
+  justify-content: space-between;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.list-comment .comment-item .comment-item_info {
+  border: 1px solid rgb(229, 229, 229);
+  border-radius: 10px;
+  background-color: rgb(245, 250, 255);
+  margin-left: 10px;
+  padding: 10px 10px;
+  min-width: 150px;
+  max-width: 100%;
+}
+.list-comment .comment-item .comment-item_info p {
+  margin: 0;
+}
+.list-comment .comment-item .comment-item_info .nameUser {
+  font-weight: 700;
+}
+.list-comment .comment-item .comment-item_info .comment-content {
+  font-size: 14px;
+}
+.list-comment .comment-item .comment-item_info .date {
+  font-size: 10px;
+}
+
+.checkNotify {
+  background-color: rgb(241, 251, 255);
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgb(225, 225, 225);
+}/*# sourceMappingURL=NewsClass.style.css.map */

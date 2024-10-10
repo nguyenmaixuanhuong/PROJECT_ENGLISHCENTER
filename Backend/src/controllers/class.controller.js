@@ -33,7 +33,7 @@ exports.updateClass = async (req, res) => {
             await currentTeacher.save();
             await newTeacher.class.push(classUpdate._id)
         }
-        await Class.updateOne(  
+        await Class.updateOne(
             { _id: id },
             { $set: updateInfor },
             { $unset: false }
@@ -63,7 +63,7 @@ exports.addTeachersInClass = async (req, res) => {
                 const teacherCurrent = await Teacher.findById(teacher.value)
                 teacherCurrent.class.push(class_id)
                 await teacherCurrent.save()
-                
+
             }
         }
         res.status(200).send('Thêm học viên thành công')
@@ -87,7 +87,7 @@ exports.addStudentInClass = async (req, res) => {
 
                 const studentCurrent = await Student.findById(student.value)
                 studentCurrent.class.push(class_id)
-                await studentCurrent.save()              
+                await studentCurrent.save()
             }
         }
         res.status(200).send('Thêm học viên thành công')
@@ -139,43 +139,42 @@ exports.getClass = async (req, res) => {
     const id = req.query.id;
     try {
         const classCurrent = await Class.findById(id)
-        .populate('course')
-        .populate({
-            path: 'teachers',
-            populate: {
-                path: 'account',
-                select: 'avatar'
-            }
-        })
-        .populate({
-            path: 'students',
-            populate: {
-                path: 'account',
-                select: '-password'
-            }
-        });
+            .populate('course')
+            .populate({
+                path: 'teachers',
+                populate: {
+                    path: 'account',
+                    select: 'avatar'
+                }
+            })
+            .populate({
+                path: 'students',
+                populate: {
+                    path: 'account',
+                    select: '-password'
+                }
+            });
         res.status(200).send(classCurrent)
     } catch (error) {
         console.log(error);
-        res.status(500).send(error.message)        
+        res.status(500).send(error.message)
     }
 };
 
 exports.getClassesById = async (req, res) => {
     const id = req.query.id;
     const role = req.query.role;
-    // console.log(id,role);
     try {
         let classes;
-        if(role==='Student'){
-            classes = await Class.find({students: id})
-            
+        if (role === 'Student') {
+            classes = await Class.find({ students: id })
+
         }
-        else if(role==='Teacher'){
-            classes = await Class.find({teachers: id})
+        else if (role === 'Teacher') {
+            classes = await Class.find({ teachers: id })
         }
         res.status(200).send(classes)
-        
+
     } catch (error) {
         res.status(500).send(error.message)
     }

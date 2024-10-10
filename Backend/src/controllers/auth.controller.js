@@ -1,4 +1,4 @@
-const { model } = require('mongoose')
+
 const Account = require('../models/account.model')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
@@ -16,26 +16,26 @@ exports.login = async (req, res) => {
         const user = await Account.findOne({ username: username })
         if (user) {
             const auth = await bcrypt.compare(password, user.password);
-            
-            if (auth) {           
+
+            if (auth) {
                 const token = this.createToken(user._id)
                 let userInfor;
                 if (user.role === 'Student') {
                     userInfor = await Student.findOne({ account: user._id }).populate({
                         path: 'account',
-                        select:'-password',
-                        populate:'notifications.information'
+                        select: '-password',
+                        populate: 'notifications.information'
                     })
                 }
                 else {
                     userInfor = await Teacher.findOne({ account: user._id }).populate({
                         path: 'account',
-                        select:'-password',
-                        populate:'notifications.information'
+                        select: '-password',
+                        populate: 'notifications.information'
                     })
                 }
                 res.header('Authorization', `Bearer ${token}`);
-                res.status(200).send({token:token, infor: userInfor });
+                res.status(200).send({ token: token, infor: userInfor });
             }
             else {
                 res.status(400).send('Username hoặc mật khẩu không chính xác')
@@ -52,3 +52,29 @@ exports.login = async (req, res) => {
 
 }
 
+exports.getInforUser = async (req, res) => {
+    const userId = req.query.id
+    const role = req.query.role
+    try {
+        let userInfor;
+        if (role === 'Student') {
+            userInfor = await Student.findById(userId, 'fullName class')
+                .populate({
+                    path: 'account',
+                    select: 'avatar.url',
+                })
+        }
+        else {
+            userInfor = await Teacher.findById(userId, 'fullName class')
+                .populate({
+                    path: 'account',
+                    select: 'avatar.url',
+                })
+        }
+        res.status(200).send(userInfor)
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error)
+
+    }
+}

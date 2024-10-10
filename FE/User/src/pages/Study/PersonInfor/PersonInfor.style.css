@@ -1,0 +1,76 @@
+.person-infor-container {
+  margin: auto;
+  width: 70%;
+  padding: 20px;
+  margin-top: 150px;
+  border: 1px solid rgb(231, 231, 231);
+  border-radius: 30px;
+  background-color: rgb(243, 250, 255);
+}
+
+.person-infor {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.selections {
+  float: right;
+}
+
+.avatar-person {
+  display: flex;
+  align-items: center;
+}
+.avatar-person .avatar-image {
+  padding: 5px;
+  border: 3px solid rgb(0, 0, 150);
+  width: 15rem;
+  height: 15rem;
+}
+.avatar-person .avatar-image img {
+  width: 106%;
+  height: 106%;
+}
+
+.list-infor {
+  padding: 10px;
+}
+.list-infor .info-item {
+  border-radius: 10px;
+  padding: 10px 30px;
+}
+.list-infor .info-item .title {
+  margin-right: 20px;
+  color: rgb(0, 7, 147);
+}
+.list-infor .info-item .infor {
+  font-size: 18px;
+}
+
+.change-password .input-password {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.formInfor {
+  padding-top: 40px;
+}
+.formInfor form {
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 2px 2px 10px grey;
+}
+.formInfor h3 {
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .formInfor form {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 2px 2px 10px grey;
+  }
+}/*# sourceMappingURL=PersonInfor.style.css.map */

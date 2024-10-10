@@ -63,7 +63,7 @@ function Attendance({ classCurrent }) {
             <input type="checkbox" style={{ marginLeft: '20px', width: '20px', height: '20px' }}
                 checked={selectedRows.includes(params.row.id)}
                 onChange={(event) => handleCheckboxChange(event, params.row.id)}
-                readOnly 
+                readOnly
             />
         ),
     });
@@ -83,7 +83,6 @@ function Attendance({ classCurrent }) {
         }
     };
 
-    console.log(selectedRows);
     const saveAttdance = () => {
         const attendance = {
             class: classCurrent._id,
@@ -106,7 +105,13 @@ function Attendance({ classCurrent }) {
             <div className="title-attendance">
                 <h3>ĐIỂM DANH</h3>
                 {user.role === 'Teacher' ?
-                    <Button onClick={handleOpen} color='success' variant='contained' sx={{ marginBottom: 2 }}> <BookmarksIcon /> ĐIỂM DANH</Button>
+                    <Button
+                        disabled={classCurrent.isFinish}
+                        onClick={handleOpen}
+                        color='success'
+                        variant='contained'
+                        sx={{ marginBottom: 2 }}
+                    > <BookmarksIcon /> ĐIỂM DANH</Button>
                     : ''
                 }
             </div>
@@ -120,10 +125,10 @@ function Attendance({ classCurrent }) {
                     <Box sx={style}>
                         <Typography id="modal-modal-title" sx={{ textAlign: 'center' }} variant="h4" component="h2">
                             BẢNG ĐIỂM DANH
-                        </Typography>         
+                        </Typography>
                         <Typography id="modal-modal-title" sx={{ textAlign: 'center' }} variant="h6" component="h2">
-                          Ngày:   {new Date().toLocaleDateString('vi-VN')}
-                        </Typography> 
+                            Ngày:   {new Date().toLocaleDateString('vi-VN')}
+                        </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             <div style={{ height: 400, width: '100%' }}>
                                 <DataGrid sx={{ textAlign: 'center', fontSize: 18 }}
@@ -138,10 +143,10 @@ function Attendance({ classCurrent }) {
                                 <SaveIcon fontSize='large'></SaveIcon>
                                 <h6 className='mt-3'>Lưu</h6>
                             </Button>
-                            <Button color='warning'  onClick={handleClose} sx={{ float: 'right', mt: 1 }}>
+                            <Button color='warning' onClick={handleClose} sx={{ float: 'right', mt: 1 }}>
                                 <h6 className='mt-3'>Hủy</h6>
                             </Button>
-                            
+
                         </Typography>
                     </Box>
                 </Modal>
@@ -161,7 +166,7 @@ function Attendance({ classCurrent }) {
 
             <div className="list-attendance">
                 {attendances && attendances.map((attendance, index) => (
-                    <AttendanceDetail students={classCurrent.students} attendance={attendance} index={index}></AttendanceDetail>
+                    <AttendanceDetail isFinish={classCurrent?.isFinish} students={classCurrent.students} attendance={attendance} index={index}></AttendanceDetail>
                 ))}
             </div>
         </div>

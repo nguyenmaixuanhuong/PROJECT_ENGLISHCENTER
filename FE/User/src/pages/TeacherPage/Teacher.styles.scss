@@ -23,30 +23,29 @@
 }
 
 .card-container {
-    background: linear-gradient(to top, #0076a9, rgb(255, 184, 184));
+    background-color: #e8f8ff;
     .card-content {
         width: 300px;
         .card-header {
             display: flex;
-            justify-content: space-around;
-
+            justify-content: space-between;
+            align-items: center;
             .card-infor {
                 margin-top: 30px;
-                color: white;
             }
 
         }
         .card-maxim {
-            margin: 40px;
-            padding: 10px;
+            // padding: 10px;
             border-bottom: 1px solid rgb(243, 243, 243);
             text-align: center;
             font-style: italic;
-            color: rgb(244, 244, 244);
         }
     }
     
 }
 .card-container:hover{
-    background: linear-gradient(to top, #006895, rgb(255, 165, 165));
+    background: #0072a2;
+    color: white;
+    transition: all 0.5s ease-in-out;
 }

@@ -1,4 +1,3 @@
-const e = require('cors');
 const Assignments = require('../models/assignments.model')
 const Class = require('../models/class.model')
 
@@ -111,8 +110,8 @@ exports.markScore = async (req, res) => {
         if (result) {
             res.status(200).send('Thành công');
         }
-        else{
-        res.status(400).send('Không tìm thấy');
+        else {
+            res.status(400).send('Không tìm thấy');
 
         }
     } catch (error) {

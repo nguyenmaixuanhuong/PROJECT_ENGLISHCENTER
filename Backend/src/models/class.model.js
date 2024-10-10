@@ -1,51 +1,55 @@
 const mongoose = require('mongoose');
 const Assignments = require('./assignments.model');
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const classSchema = mongoose.Schema({
-    className:{
+    className: {
         type: String,
         required: true,
     },
-    teachers:[{
+    teachers: [{
         type: Schema.Types.ObjectId,
         ref: 'Teacher',
     }],
-    course:{
+    course: {
         type: Schema.Types.ObjectId,
         ref: 'Course',
     },
-    startDay:{
+    startDay: {
         type: String,
         required: true
     },
-    finishDay:{
+    finishDay: {
         type: String,
         required: true
     },
-    students:[
+    students: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Student',
         }
     ],
-    informations:[{
+    informations: [{
         type: Schema.Types.ObjectId,
         ref: 'Information',
     }],
-    attendances:[{
+    attendances: [{
         type: Schema.Types.ObjectId,
         ref: 'Attendance',
     }],
-    assignments:[{
+    assignments: [{
         type: Schema.Types.ObjectId,
         ref: 'Assignments',
     }],
-    isFinish:{
+    isFinish: {
         type: Boolean,
         default: false,
-    }
+    },
+    exams: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Exam',
+    }]
 });
 
-const Class = mongoose.model('Class',classSchema);
+const Class = mongoose.model('Class', classSchema);
 module.exports = Class;

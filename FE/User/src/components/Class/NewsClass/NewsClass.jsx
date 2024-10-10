@@ -3,7 +3,7 @@ import * as React from 'react';
 import EditorText from '../../EditorText/EditorText';
 import './NewsClass.style.scss'
 import Button from '@mui/material/Button';
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { listInformation, deleteNews } from '../../../services/information';
 import Information from './Information';
 import { removeNotify } from '../../../store/NotifiySlice';
@@ -34,7 +34,6 @@ function NewsClass({ classCurrent }) {
     const scrollToNews = () => {
         if (informations.length > 0) {
             const notificationElement = document.getElementById(idInfor);
-            console.log(notificationElement);
             if (notificationElement) {
                 notificationElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 notificationElement.classList.add('checkNotify')
@@ -62,12 +61,18 @@ function NewsClass({ classCurrent }) {
         <div className="newsclass">
             <div className="poster-class">
                 <h1>{classCurrent?.className}</h1>
+                {classCurrent?.isFinish && <h5> Lớp học đã kết thúc</h5>}
             </div>
             <div className="">
                 <div className="title-news">
                     <h3>BẢNG TIN</h3>
                     {role === 'Teacher' ?
-                        <Button onClick={handleOpen} variant='contained' sx={{ marginBottom: 2 }}>ĐĂNG TIN</Button>
+                        <Button
+                            onClick={handleOpen}
+                            variant='contained'
+                            sx={{ marginBottom: 2 }}
+                            disabled={classCurrent?.isFinish}
+                        >ĐĂNG TIN</Button>
                         : ''
                     }
                 </div>
@@ -76,7 +81,7 @@ function NewsClass({ classCurrent }) {
                     : ''}
                 {informations && informations.map((information) => (
                     <div className='' key={information._id} id={information._id}>
-                        <Information handleDeleteNews={handleDeleteNews} information={information} renderNews={renderNews} role={role} user={user}></Information>
+                        <Information isFinish={classCurrent?.isFinish} handleDeleteNews={handleDeleteNews} information={information} renderNews={renderNews} role={role} user={user}></Information>
                     </div>
                 ))}
             </div>

@@ -117,7 +117,13 @@ function Exercise({ classCurrent }) {
                     <h3>BÀI TẬP</h3>
                     {role === 'Teacher' ?
                         <div>
-                            <Button variant='contained' sx={{ marginBottom: 2 }} onClick={handleOpen}><PostAddIcon />THÊM BÀI TẬP MỚI</Button>
+                            <Button
+                                variant='contained'
+                                sx={{ marginBottom: 2 }}
+                                onClick={handleOpen}
+                                disabled={classCurrent?.isFinish}
+                            ><PostAddIcon />THÊM BÀI TẬP MỚI
+                            </Button>
                             <Modal
                                 open={open}
                                 onClose={handleClose}
@@ -190,7 +196,7 @@ function Exercise({ classCurrent }) {
                                 </AccordionSummary>
                                 <AccordionDetails >
                                     <div style={{ width: '100%' }}>
-                                    <div className="text ">
+                                        <div className="text ">
                                             <h6>Giáo viên: {assignment.teacher?.fullName}</h6>
                                         </div>
                                         <div className="text ">

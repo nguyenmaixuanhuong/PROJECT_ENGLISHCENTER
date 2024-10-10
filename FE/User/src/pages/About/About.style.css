@@ -1,0 +1,26 @@
+.about-container {
+  margin-top: 125px;
+}
+.about-container .about-header {
+  background-color: aliceblue;
+  padding: 30px 0;
+  padding-left: 100px;
+}
+.about-container .about-header .about-title {
+  font-weight: 600;
+  color: #001567;
+}
+.about-container .about-body .image img {
+  width: 100%;
+}
+.about-container .about-body .about-item {
+  font-size: 18px;
+  margin-top: 10px;
+  list-style: none;
+}
+.about-container .about-body .about-item .tilte {
+  font-weight: 700;
+}
+.about-container .about-body .about-item p {
+  text-align: justify;
+}/*# sourceMappingURL=About.style.css.map */
