@@ -19,7 +19,6 @@ import Cookies from 'js-cookie';
 import { logoutUser } from '@/store/userSlice';
 
 const pages = ["Bài Kiểm Tra", "Lưu Trữ "];
-const settings = ['Hệ thống học tập'];
 
 function AppBarUser() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -27,6 +26,7 @@ function AppBarUser() {
     const [selectedPage, setSelectedPage] = React.useState("Bài Kiểm Tra");
     const [loading, setLoading] = React.useState(true);
     const { user } = useSelector((state) => state.user);
+    const { role } = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
     React.useEffect(() => {
@@ -136,24 +136,41 @@ function AppBarUser() {
                                         ))}
                                     </Menu>
                                 </Box>
-                                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center" }}>
-                                    {pages.map((page) => (
-                                        <Link key={page} style={{ textDecoration: "none" }} href={page === "Bài Kiểm Tra" ? "/exams" : "history"}>
+
+                                {role === "Teacher" ?
+                                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center" }}>
+
+                                        <Link style={{ textDecoration: "none" }} href={"/exams"}>
                                             <Button
-                                                onClick={() => handleClick(page)}
+                                                onClick={() => handleClick("Bài Kiểm Tra")}
                                                 sx={{
                                                     my: 2,
                                                     color: "black",
                                                     display: 'block',
                                                     mx: 10,
-                                                    fontWeight: selectedPage === page ? 'bold' : '',
+                                                    fontWeight: selectedPage === "Bài Kiểm Tra" ? 'bold' : '',
                                                 }}
                                             >
-                                                {page}
+                                                BÀI KIỂM TRA
                                             </Button>
                                         </Link>
-                                    ))}
-                                </Box>
+                                        <Link style={{ textDecoration: "none" }} href={"/history"}>
+                                            <Button
+                                                onClick={() => handleClick("Lưu trữ")}
+                                                sx={{
+                                                    my: 2,
+                                                    color: "black",
+                                                    display: 'block',
+                                                    mx: 10,
+                                                    fontWeight: selectedPage === "Lưu trữ" ? 'bold' : '',
+                                                }}
+                                            >
+                                                Lưu trữ
+                                            </Button>
+                                        </Link>
+                                    </Box>
+                                    : <Box sx={{ flexGrow: 1 }} />
+                                }
                                 <Box sx={{ flexGrow: 0 }}>
                                     <div style={{ display: "flex", alignItems: "center" }}>
                                         <Tooltip title="Support">

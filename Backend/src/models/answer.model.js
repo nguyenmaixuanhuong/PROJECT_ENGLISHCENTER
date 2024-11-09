@@ -27,9 +27,16 @@ const answerSchema = mongoose.Schema({
     finalScore: {
         type: Number
     },
+    comments: {
+        type: Object
+    },
     submittedAt: {
         type: Date,
         default: Date.now(),
+    },
+    attempt: {
+        type: Number,  // thêm trường này để lưu số lần làm bài
+        required: true,
     }
 })
 

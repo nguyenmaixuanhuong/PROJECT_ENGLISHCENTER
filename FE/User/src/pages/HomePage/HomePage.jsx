@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import './homepage.style.scss'
 import { useCallback, useState } from 'react';
 import Carousel from '../../layouts/MainLayout/Components/Carousels/carousel'
@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import SearchIcon from '@mui/icons-material/Search';
 import SelectedCourse from "../../components/course/SelectedCourse/SelectedCourse";
 import { useNavigate } from 'react-router-dom';
+import ModalConfirm from "./ModalConfirm";
 
 function HomePage() {
     const [value, setValue] = useState('1');
@@ -18,11 +19,11 @@ function HomePage() {
     const navigate = useNavigate();
 
     function gotoCourse() {
-        if(selected){
+        if (selected) {
             navigate(`/coursedetail/${selected}`)
         }
-        else{
-           navigate('/')
+        else {
+            navigate('/')
         }
     }
 
@@ -48,7 +49,10 @@ function HomePage() {
                                 <SearchIcon></SearchIcon> Tìm kiếm
                             </Button>
                         </div>
-                        <p className="text-center pt-3 ">Không tìm thấy khóa học phù hợp? Liên hệ với chúng tôi 029.23831000</p>
+                        <p className="text-center pt-3 ">Bạn muốn kiểm tra năng lực tiếng anh của mình? </p>
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <ModalConfirm></ModalConfirm>
+                        </Box>
                     </div>
                 </div>
                 <div className="introduce ">

@@ -1,69 +1,50 @@
 const Course = require('../models/course.model');
 const Level = require('../models/level.model');
-
-const getScore = (list_course,) => {
-
-}
-
-exports.suggestCourse = async ({ grammar, speaking, writing, listening }) => {
-    const recommendations = [];
-
-    const levels = await Level.find();
-
-    const list_course = Promise.all(levels.map(async (level) => {
-        const courses = await Course.find({ level: level._id, isDeleted: false }).select(['courseName', 'image', 'category'])
+const modelAI = require("../config/geminiaiConfig");
 
 
-        return {
-            name: level.name,
-            courses: courses
+exports.suggestCourse = async (score_skills) => {
+    try {
+
+        const courses = await Course.find({ isDeleted: false })
+            .populate({
+                path: 'level',
+                select: 'name'
+            })
+            .select(['courseName', 'image', 'category'])
+
+
+        const prompt = `bạn là 1 chuyên gia phân tích dữ liệu về trình độ tiếng anh, 
+    tôi có 1 danh sách các khóa học trong trung tâm của tôi và điểm từng phần writing, listening, speaking, grammar, reading của 1 học viên.
+    Bạn hãy phân tích điểm từng phần của học viên đó, và gợi ý các khóa học trong trung tâm của tôi cho họ. 
+    Danh sách khóa học bao gồm: 
+     ${JSON.stringify(courses)}
+    Điểm của học viên:
+          ${JSON.stringify(score_skills)}
+    Hãy trả về kết quả dưới dạng JSON như cấu trúc bên dưới.Với Feedback là lý do tại sao bạn gợi ý, chỉ trả lời 3-4 câu thôi:
+    {
+        "Feedback":"",
+        "Courses":  [
+        {
+            _id:
+            nameCourse:"",
+            "category": "", 
+            "image": "" 
         }
-    }))
-    console.log(list_course);
+     ]
+    }
+   `
 
-    const thresholds = {
-        low: 3,  // Scores below this will be considered very low
-        medium: 5,  // Scores between 3 and 5 will be medium
-        high: 7,  // Scores above this are high
-    };
+        const result = await modelAI.generateContent(prompt);
 
-    // // Function to check score and suggest course
-    const suggestBasedOnScore = (score, lowCourse, mediumCourse, highCourse) => {
-        if (score < thresholds.low) {
-            return lowCourse;
-        } else if (score >= thresholds.low && score < thresholds.high) {
-            return mediumCourse;
-        } else {
-            return highCourse;
-        }
-    };
+        const jsonString = result.response.text().replace(/```json|```/g, '').trim();
 
-    // // Grammar suggestion
-    // recommendations.push(
-    //     suggestBasedOnScore(grammar, 'Basic English', 'A1-A2', 'B1-B2')
-    // );
+        const resultFormatJSON = JSON.parse(jsonString);
 
-    // // Speaking suggestion
-    // recommendations.push(
-    //     suggestBasedOnScore(speaking, 'Basic English', 'Communication English', 'IELTS')
-    // );
+        return resultFormatJSON
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
 
-    // // Writing suggestion
-    // recommendations.push(
-    //     suggestBasedOnScore(writing, 'Basic English', 'A1-A2', 'B1-B2')
-    // );
-
-    // // Listening suggestion
-    // recommendations.push(
-    //     suggestBasedOnScore(listening, 'Basic English', 'TOEIC', 'IELTS')
-    // );
-
-    // // If all scores are low, default to Basic English
-    // const uniqueCourses = [...new Set(recommendations)];
-
-    // if (uniqueCourses.length === 1 && uniqueCourses[0] === 'Basic English') {
-    //     return ['Basic English'];
-    // }
-
-    return list_course;
 }

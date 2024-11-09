@@ -24,6 +24,7 @@ import { setExam } from '@/store/examSlice';
 import styles from './examItem.module.scss'
 import ModalConfirmDelete from './modalConfirmDelete';
 import { isSubmitted } from '@/pages/api/isSubmitted';
+import ModalNotifyLimit from './modalNotifyLimit';
 export default function ExemItiem(props) {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -271,15 +272,15 @@ export default function ExemItiem(props) {
                                 }
                             </Box>
                         </CardContent>
-                        <CardActions sx={{ justifyContent: "center" }}>
-                            {!submitted ?
-                                <>
-                                    {props.status === 'now' ?
-                                        <Button variant='contained' onClick={() => { router.push(`/test?id=${props.exam._id}`) }}> Vào Thi </Button>
-                                        : ''
+                        <CardActions >
+                            {props.status === 'now' ?
+                                <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                    {!submitted ? <Button variant='contained' color='warning' size='small' onClick={() => { router.push(`/test?id=${props.exam._id}`) }}> Vào Thi </Button>
+                                        : <ModalNotifyLimit />
                                     }
-                                </>
-                                : <Button variant='contained' onClick={() => { router.push(`/result/${props.exam._id}`) }}> Xem kết quả </Button>
+                                    <Button sx={{ mt: 2 }} variant='contained' size='small' onClick={() => { router.push(`/result/${props.exam._id}`) }}> kết quả </Button>
+                                </Box>
+                                : ''
                             }
                         </CardActions>
                     </Card>

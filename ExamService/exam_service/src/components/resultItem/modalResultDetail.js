@@ -7,6 +7,7 @@ import ResultQuestion from "@/components/resultItem/resultQuestion";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { TextField } from '@mui/material';
+import { useSelector } from 'react-redux';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -20,10 +21,20 @@ const style = {
     overflow: 'auto'
 };
 
-export default function ModalResultDetail({ resultData, scoreParts }) {
+export default function ModalResultDetail({ resultData, scoreParts, saveFinalScore }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const role = useSelector((state) => state.user.role)
+
+    const score = resultData.parts.map(part => {
+        const score_skill = {
+            skill: part.partTitle,
+            score: part.questions.reduce((total, question) => total + question.finalScore, 0)
+        }
+        return score_skill
+    })
+
 
     const handleComment = (comments, type) => {
         switch (type) {
@@ -76,7 +87,6 @@ export default function ModalResultDetail({ resultData, scoreParts }) {
                         <Box sx={{ display: 'flex', justifyContent: 'space-evenly', backgroundColor: '#fbfbfb', p: 2, }}>
                             <Typography variant="body1"> Bài kiểm tra: {resultData?.examSummary.title}</Typography>
                             <Typography variant="body1"> Thời gian: {resultData?.examSummary.times}</Typography>
-                            {/* <Typography variant="body1"> Tổng điểm:  <span style={{ color: '#de0000' }}>{resultData.isPublicScore ? resultData.finalScore : 'Chờ chấm điểm'}</span> / {scoreExam}</Typography> */}
                         </Box>
                         {
                             resultData.parts.map((part, index) => (
@@ -86,7 +96,7 @@ export default function ModalResultDetail({ resultData, scoreParts }) {
                                             <Typography variant='h6' >
                                                 Phần {part.partNumber}: {part.partTitle}
                                             </Typography>
-                                            <Typography variant='body1'>Điểm: {scoreParts[index]} / {part.partScore}</Typography>
+                                            <Typography variant='body1'>Điểm: {scoreParts ? scoreParts[index]?.score : score[index]?.score} / {part.partScore}</Typography>
 
                                         </Box>
                                         {part.partPassage && <Box sx={{ backgroundColor: 'white', p: 2 }}>
@@ -99,7 +109,7 @@ export default function ModalResultDetail({ resultData, scoreParts }) {
                                         </Box>
                                         }
 
-                                        {part.partAudio.url && <Box sx={{ backgroundColor: 'white', p: 2 }}>
+                                        {part.partAudio?.url && <Box sx={{ backgroundColor: 'white', p: 2 }}>
                                             <audio style={{ width: '100%' }} src={part.partAudio.url} controls />
                                         </Box>
                                         }
@@ -128,8 +138,10 @@ export default function ModalResultDetail({ resultData, scoreParts }) {
                                 </Box>
                             ))
                         }
-
                     </div>
+                    {role === 'Teacher' ? <Button onClick={saveFinalScore} sx={{ mb: 2, float: 'right', p: 2 }} variant='contained'>Lưu Điểm</Button>
+                        : ''
+                    }
                 </Box>
             </Modal>
         </div>

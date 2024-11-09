@@ -21,9 +21,12 @@ const answersSlice = createSlice({
                 state.updatedAnswers.push({ answerId, finalScore });
             }
         },
+        deleteScoreAnswer: (state, action) => {
+            state.updatedAnswers = []
+        }
     },
 });
 
 // Export actions và reducer
-export const { updateScoreAnswer } = answersSlice.actions;
+export const { updateScoreAnswer, deleteScoreAnswer } = answersSlice.actions;
 export default answersSlice.reducer;

@@ -12,15 +12,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useRouter } from "next/navigation";
 import { TurnOnPublishScore } from "@/pages/api/turnOnPublishScore";
+import Chip from '@mui/material/Chip';
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 export async function getServerSideProps(context) {
-    const { examId } = context.query;
+    const { examId, status } = context.query;
     const resultsData = await getResults(examId)
     return {
-        props: { examId, resultsData },
+        props: { examId, resultsData, status },
     };
 }
-const Submissions = ({ examId, resultsData }) => {
+const Submissions = ({ examId, resultsData, status }) => {
+    const autoGrade = useSelector((state) => state.exam.summary.autoGrade) || false;
     const handlePublishScore = async () => {
         const result = await TurnOnPublishScore(examId);
         if (result) {
@@ -40,7 +43,7 @@ const Submissions = ({ examId, resultsData }) => {
                             <TableCell align="center" sx={{ fontWeight: 'bold' }}>Tên học viên</TableCell>
                             <TableCell align="center" sx={{ fontWeight: 'bold' }}>Lớp</TableCell>
                             <TableCell align="center" sx={{ fontWeight: 'bold' }}>Thời gian nộp bài</TableCell>
-                            <TableCell align="center" sx={{ fontWeight: 'bold' }}>Điểm</TableCell>
+                            <TableCell align="center" sx={{ fontWeight: 'bold' }}>Chấm điểm</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -56,7 +59,7 @@ const Submissions = ({ examId, resultsData }) => {
                                 </TableCell>
                                 <TableCell align="center">{result.className}</TableCell>
                                 <TableCell align="center">{new Date(result.submittedAt).toLocaleString()}</TableCell>
-                                <TableCell align="center">{result.isGraded ? result.totalScore : 'Chưa hoàn thành'}</TableCell>
+                                <TableCell align="center">{result.isGraded ? <Chip label="Đã chấm" color="success" /> : <Chip label="Chưa hoàn thành" color="warning" />}</TableCell>
 
                             </TableRow>
                         ))}
@@ -64,7 +67,9 @@ const Submissions = ({ examId, resultsData }) => {
                 </Table>
             </TableContainer>
             <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                <Button onClick={handlePublishScore} variant="contained" >Công Khai Điểm</Button>
+                {status !== 'end' && !autoGrade &&
+                    <Button onClick={handlePublishScore} variant="contained" >Công Khai Điểm</Button>
+                }
             </Box>
         </div>
     )

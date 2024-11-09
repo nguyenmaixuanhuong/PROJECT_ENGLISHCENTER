@@ -48,7 +48,9 @@ function ResponsiveAppBar() {
         <AppBar position="fixed" variant='outlined' sx={{ backgroundColor: "white" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Image src="/images/logo/logo.png" width={80} height={50}></Image>
+                    <a href='http://localhost:3000/'>
+                        <Image src="/images/logo/logo.png" width={80} height={50}></Image>
+                    </a>
                     <Typography
                         variant="h6"
                         noWrap

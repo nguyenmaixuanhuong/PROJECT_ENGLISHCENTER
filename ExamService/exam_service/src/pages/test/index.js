@@ -22,6 +22,8 @@ export async function getServerSideProps(context) {
 }
 
 const Test = ({ exam }) => {
+    console.log(exam);
+
     const dispatch = useDispatch();
     const router = useRouter();
     const user = useSelector((state) => state.user.user);

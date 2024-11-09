@@ -5,14 +5,14 @@ import { Container, Grid } from "@mui/material";
 import ExemItiem from "../../components/examItem"
 import Typography from "@mui/material/Typography";
 import LayoutUser from "@/components/layouts/MainLayout/layoutUser";
+import getAllExams from "../api/getAllExam";
 const History = () => {
     const userId = useSelector((state) => state.user.user._id);
     const [examsHistory, setExamsHistory] = useState([]);
     const [render, setRender] = useState(false);
     useEffect(() => {
         const fetchExamsHistory = async () => {
-            const res = await fetch(`/api/getAllExam?userId=${userId}`);
-            const data = await res.json();
+            const data = await getAllExams(userId);
             if (data) {
                 const examsHistory = data.filter(exam => (exam.summary.endTime && new Date(exam.summary.endTime) < Date.now()))
                 setExamsHistory(examsHistory);

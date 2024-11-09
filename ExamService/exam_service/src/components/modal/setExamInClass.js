@@ -19,7 +19,7 @@ const style = {
     p: 4,
 };
 
-export default function setExamInClass({ classes, status }) {
+export default function setExamInClass({ classes, status, setClassInScope }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -45,6 +45,7 @@ export default function setExamInClass({ classes, status }) {
 
         const summary = exam.summary;
         const update = { ...summary, scope: scope }
+        setClassInScope(scope)
         dispatch(setSummary(update));
 
     }

@@ -5,13 +5,11 @@ const CountdownTimer = ({ initialTime, handleSubmit }) => {
         const savedTime = localStorage.getItem('timeLeft');
         const savedTimestamp = localStorage.getItem('timestamp');
 
-        if (JSON.parse(savedTime) && JSON.parse(savedTimestamp)) {
+        if (savedTimestamp && savedTime) {
             const elapsedTime = Math.floor((Date.now() - parseInt(savedTimestamp, 10)) / 1000);
             const updatedTimeLeft = parseInt(savedTime, 10) - elapsedTime;
-            return updatedTimeLeft > 0 ? updatedTimeLeft : 0;
+            return updatedTimeLeft > 0 ? updatedTimeLeft : initialTime;
         }
-
-
         return initialTime;
     });
 
@@ -24,15 +22,23 @@ const CountdownTimer = ({ initialTime, handleSubmit }) => {
         }
 
         const timerId = setInterval(() => {
-            setTimeLeft((prevTime) => prevTime - 1);
+            setTimeLeft((prevTime) => {
+                if (prevTime <= 1) {
+                    clearInterval(timerId);
+                    localStorage.removeItem('timeLeft');
+                    localStorage.removeItem('timestamp');
+                    handleSubmit();
+                    return 0;
+                }
+                const newTime = prevTime - 1;
+                localStorage.setItem('timeLeft', newTime);
+                localStorage.setItem('timestamp', Date.now());
+                return newTime;
+            });
         }, 1000);
 
-        // Save the current timeLeft and timestamp to localStorage
-        localStorage.setItem('timeLeft', timeLeft);
-        localStorage.setItem('timestamp', Date.now());
-
         return () => clearInterval(timerId);
-    }, [timeLeft]);
+    }, [timeLeft, handleSubmit]);
 
     const formatTime = (time) => {
         const minutes = Math.floor(time / 60);

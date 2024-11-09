@@ -38,7 +38,9 @@ const CreateExam = ({ classes }) => {
         "scope": true,
         "times": true,
         "startTime": true,
-        "endTime": true
+        "endTime": true,
+        "autoGrade": false,
+        "attempts": true,
     });
 
     React.useEffect(() => {
@@ -46,6 +48,13 @@ const CreateExam = ({ classes }) => {
             setChecked((prev) => ({
                 ...prev,
                 scope: exam.summary.scope.isPublic
+            }));
+        }
+
+        if (exam.summary?.autoGrade) {
+            setChecked((prev) => ({
+                ...prev,
+                autoGrade: exam.summary.autoGrade
             }));
         }
     }, [])
@@ -59,7 +68,9 @@ const CreateExam = ({ classes }) => {
         },
         "times": null,
         "startTime": null,
-        "endTime": null
+        "endTime": null,
+        "autoGrade": true,
+        "attempts": 1
     })
 
     const [elements, setElements] = React.useState(elementsRedux)
@@ -169,7 +180,7 @@ const CreateExam = ({ classes }) => {
         let newValue = value;
         let dispatchUpdateInfor;
         // Ensure you have a consistent type for the 'times' field
-        if (name === "times") {
+        if (name === "times" || name === "attempts") {
             if (!Number.parseInt(value)) {
                 newValue = ''; // or handle this case as needed
             } else if (Number.parseInt(value) < 0) {
@@ -187,6 +198,7 @@ const CreateExam = ({ classes }) => {
     };
 
     const handleChangeChecked = (e) => {
+
         if (e.target.name === 'scope') {
             let scope = {
                 isPublic: true,
@@ -195,12 +207,22 @@ const CreateExam = ({ classes }) => {
             const isChecked = e.target.checked;
             if (!isChecked) {
                 scope.isPublic = false;
+                scope.classes = exam.summary.scope?.classes ? exam.summary.scope?.classes : []
             }
             setChecked({ ...checked, [e.target.name]: isChecked });
             setInforExams(preInfor => {
                 const updatedInfor = { ...preInfor, ['scope']: scope };
                 dispatch(setSummary(updatedInfor));
+                return updatedInfor;
+            });
+        }
+        else if (e.target.name === 'autoGrade') {
+            const isChecked = e.target.checked;
+            setChecked({ ...checked, [e.target.name]: isChecked });
+            setInforExams(preInfor => {
+                const updatedInfor = { ...preInfor, ['autoGrade']: isChecked };
 
+                dispatch(setSummary(updatedInfor));
                 return updatedInfor;
             });
         }
@@ -208,13 +230,20 @@ const CreateExam = ({ classes }) => {
             setChecked({ ...checked, [e.target.name]: e.target.checked });
             setInforExams(preInfor => {
                 const updatedInfor = { ...preInfor, [e.target.name]: null };
-                dispatch(setSummary(updatedInfor));
 
+                dispatch(setSummary(updatedInfor));
                 return updatedInfor;
             });
         }
 
     };
+    const setClassInScope = (scope) => {
+        setInforExams(preInfor => {
+            const updatedInfor = { ...preInfor, ['scope']: scope };
+            return updatedInfor;
+        });
+    }
+
     return (
         <div className={styles.exams_container}>
             <div className={styles.exam_summary} >
@@ -260,7 +289,7 @@ const CreateExam = ({ classes }) => {
                                 </div>
                                 :
                                 <>
-                                    <SetExamInClass status={status} classes={classes}></SetExamInClass>
+                                    <SetExamInClass setClassInScope={setClassInScope} status={status} classes={classes}></SetExamInClass>
 
                                 </>
                             }
@@ -367,6 +396,60 @@ const CreateExam = ({ classes }) => {
                                 </div>
                                 :
                                 ""
+                            }
+                        </div>
+                        <div className={styles.summary_switch}>
+                            <Switch
+                                disabled={status === 'now' || status === 'end' ? true : false}
+                                name='attempts'
+                                checked={checked.attempts}
+                                onChange={handleChangeChecked}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                            <div>
+                                <p style={{ fontWeight: "bold" }}>Số lần làm bài:</p>
+                                {checked.attempts
+                                    ? <p style={{ fontSize: 14, }}>Bạn có thể đặt số lần mà học viên có thể làm bài kiểm tra này</p>
+                                    : <p style={{ fontSize: 14, }}>Học viên có thể làm bài này vô số lần</p>
+                                }
+                            </div>
+                            {checked.attempts ?
+                                <TextField
+                                    disabled={status === 'now' || status === 'end' ? true : false}
+                                    name='attempts'
+                                    value={inforExams.attempts}
+                                    onChange={handleChangeInfor}
+                                    id="outlined-basic"
+                                    placeholder='0'
+                                    variant="outlined"
+                                    sx={{ width: "100px", ml: "auto" }}
+                                    InputProps={{
+                                        endAdornment: <InputAdornment position="end">Lần</InputAdornment>
+                                    }}
+                                />
+                                :
+                                ""
+                            }
+                        </div>
+                        <div className={styles.summary_switch}>
+                            <Switch
+                                name='autoGrade'
+                                checked={checked.autoGrade}
+                                onChange={handleChangeChecked}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                                disabled={status === 'now' || status === 'end' ? true : false}
+                            />
+                            {checked.autoGrade ?
+                                <div>
+                                    <p style={{ fontWeight: "bold" }}>Tự động chấm diểm:</p>
+                                    <p style={{ fontSize: 14, }}>Hệ thống sẽ tự động chấm diểm và trả kết quả về cho học viên</p>
+
+                                </div>
+                                :
+                                <>
+                                    <p>Hệ thống sẽ lưu bài kiểm tra và bạn sẽ là người chấm điểm </p>
+
+                                </>
                             }
                         </div>
                     </div>

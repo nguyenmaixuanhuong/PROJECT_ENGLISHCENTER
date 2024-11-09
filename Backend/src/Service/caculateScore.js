@@ -6,7 +6,5 @@ exports.calculateStudentScore = (answers) => {
 };
 
 exports.checkIsGraded = (answers) => {
-    console.log(answers);
-
     return answers.every(answer => answer.finalScore !== undefined && answer.finalScore !== null);
 };

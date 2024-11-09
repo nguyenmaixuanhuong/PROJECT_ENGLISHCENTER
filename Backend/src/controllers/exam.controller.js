@@ -30,8 +30,9 @@ exports.createExam = async (req, res) => {
             });
             return result._id;
         }));
-        const examInfor = { userCreated: userId, summary: exam.summary, part: newParts }
+        const examInfor = { userCreated: userId, summary: exam.summary, part: newParts, isPublicScore: exam.summary.autoGrade }
         const newExam = new Exam(examInfor);
+
         await newExam.save().then(async (result) => {
             if (!result.summary.scope.isPublic) {
                 const classes = result.summary.scope.classes
@@ -52,10 +53,18 @@ exports.createExam = async (req, res) => {
     }
 };
 
+const mongoose = require('mongoose');
+
 exports.getExamById = async (req, res) => {
     try {
+        const { examId } = req.query;
+        console.log(examId);
 
-        const examId = req.query.examId;
+        // Kiểm tra `examId` có hợp lệ hay không
+        if (!examId || !mongoose.Types.ObjectId.isValid(examId)) {
+            return res.status(400).send('Invalid exam ID');
+        }
+
         const exam = await Exam.findById(examId)
             .populate('userCreated')
             .populate('summary.scope.classes')
@@ -65,18 +74,18 @@ exports.getExamById = async (req, res) => {
                     path: 'questions',
                 },
             });
+
         if (exam) {
             res.status(200).send(exam);
-        }
-        else {
+        } else {
             res.status(404).send('Not Found');
         }
     } catch (error) {
-        console.log(error);
-        res.status(500).send('Error Server')
-
+        console.error(error);
+        res.status(500).send('Server Error');
     }
-}
+};
+
 
 exports.getAllExam = async (req, res) => {
     try {

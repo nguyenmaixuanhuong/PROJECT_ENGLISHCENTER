@@ -17,6 +17,8 @@ const examSlice = createSlice({
             times: null,
             startTime: null,
             endTime: null,
+            autoGrade: true,
+            attempts: null,
         },
         part: [{
             title: `Phần 1`,

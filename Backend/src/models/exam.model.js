@@ -34,6 +34,13 @@ const examSchema = mongoose.Schema({
         endTime: {
             type: Date,
         },
+        autoGrade: {
+            type: Boolean,
+        },
+        attempts: {
+            type: Number,  // thêm trường này để giới hạn số lần làm bài
+            default: 1     // mặc định chỉ được làm 1 lần
+        }
 
     },
     part: [{
@@ -44,7 +51,8 @@ const examSchema = mongoose.Schema({
     isPublicScore: {
         type: Boolean,
         default: false
-    }
+    },
+
 })
 examSchema.pre('findOneAndDelete', async function (next) {
     try {
