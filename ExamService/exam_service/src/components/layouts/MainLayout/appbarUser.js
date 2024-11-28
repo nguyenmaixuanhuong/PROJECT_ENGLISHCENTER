@@ -96,7 +96,7 @@ function AppBarUser() {
 
                     {
                         !user ? (
-                            <Button sx={{ ml: 'auto' }} color='error' variant='contained' href='http://localhost:3000/login'>Đăng nhập hệ thống</Button>
+                            <Button sx={{ ml: 'auto' }} color='error' variant='contained' href='http://localhost:3000'>Trang Chủ</Button>
                         ) : (
                             <>
                                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

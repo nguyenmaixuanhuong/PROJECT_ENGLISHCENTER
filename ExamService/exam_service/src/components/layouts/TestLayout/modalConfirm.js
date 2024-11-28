@@ -36,9 +36,9 @@ export default function ModalConfirm({ type, exam, handleSubmit, loading }) {
     }, [loading])
 
     const handleExit = async () => {
-        if (userId !== "null") {
-            router.push('/exams')
-        }
+        // if (userId !== "null") {
+        //     router.push('/')
+        // }
         localStorage.setItem('timeLeft', null)
         localStorage.setItem('timestamp', null)
         const res = await fetch(`/api/deleteAnswer`, {
@@ -46,10 +46,12 @@ export default function ModalConfirm({ type, exam, handleSubmit, loading }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ userId: userId !== 'null' ? userId : guestId, examId: exam.id })
+            body: JSON.stringify({ userId: userId ? userId : guestId, examId: exam.id })
         });
+        console.log(userId);
+
         if (res.status === 200) {
-            if (userId !== 'null') {
+            if (userId) {
                 router.push('/exams');
             }
             router.push('/');

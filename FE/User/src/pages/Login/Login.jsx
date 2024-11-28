@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import './login.style.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../store/UserSlice';
-import Cookies from 'js-cookie';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -21,8 +20,6 @@ const Login = () => {
     })
 
     const { err } = useSelector((state) => state.user)
-    const role = useSelector((state) => state.user.role)
-    const user = useSelector((state) => state.user.user)
     const dispatch = useDispatch();
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const handleInputChange = (e) => {
@@ -56,17 +53,9 @@ const Login = () => {
         if (!hasErrors) {
             dispatch(loginUser(formData)).then((result) => {
                 if (result.payload) {
-                    if (document.referrer === 'http://localhost:8000/') {
-                        Cookies.set('role', role, { path: '/', secure: true, sameSite: 'Strict' });
-                        Cookies.set('userId', user?._id, { path: '/', secure: true, sameSite: 'Strict' });
-
-                        window.location.href = 'http://localhost:8000/exams';
-                    }
-                    else {
-                        navigate('/study')
-                    }
-
+                    navigate('/study')
                 }
+
                 else {
                     setOpenSnackbar(true);
                 }

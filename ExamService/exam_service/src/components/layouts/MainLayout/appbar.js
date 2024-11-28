@@ -115,7 +115,7 @@ function ResponsiveAppBar() {
                                 </Menu>
                             </Box>
 
-                            : <Button sx={{ ml: 'auto' }} color='error' variant='contained' href='http://localhost:3000/login'>Đăng nhập hệ thống</Button>
+                            : <Button sx={{ ml: 'auto' }} color='error' variant='contained' href='http://localhost:3000'>Trang Chủ</Button>
                     }
                 </Toolbar>
             </Container>

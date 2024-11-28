@@ -3,7 +3,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
+import ShareIcon from '@mui/icons-material/Share';
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from '@mui/material';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -20,6 +22,22 @@ export default function ModalConfirm() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'Bài kiểm tra năng lực Tiếng Anh ',
+                    text: 'Tham gia bài kiểm tra này nhé!',
+                    url: "http://localhost:8000/test?id=67028de7f8c5057f1885c4c0",
+                });
+                console.log('Chia sẻ thành công!');
+            } catch (error) {
+                console.error('Chia sẻ thất bại:', error);
+            }
+        } else {
+            alert('Chức năng chia sẻ không được hỗ trợ trên trình duyệt này.');
+        }
+    }
     return (
         <div>
             <Button onClick={handleOpen} variant="contained" className='nav-item_btn study-system' color='error'>Tham gia bài kiểm tra năng lực</Button>
@@ -31,6 +49,9 @@ export default function ModalConfirm() {
             >
                 <Box sx={style}>
                     <Box sx={{ textAlign: 'center' }}>
+                        <IconButton onClick={handleClose} sx={{ float: 'right' }}>
+                            <CloseIcon />
+                        </IconButton>
                         <Typography id="modal-modal-title" mb={3} variant="h6" component="h2">
                             BÀI KIỂM TRA NĂNG LỰC TIẾNG ANH
                         </Typography>
@@ -48,10 +69,11 @@ export default function ModalConfirm() {
                             Khi hoàn thành xong bạn sẽ có kết quả ngay lập tức. Chần chờ gì nữa hãy..
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <a target='_blank' href="http://localhost:8000/test?id=67028de7f8c5057f1885c4c0">
-                            <Button variant="contained" className='nav-item_btn study-system' color='error'>VÀO THI</Button>
-                        </a>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+                        <Button target='_blank' href="http://localhost:8000/test?id=67028de7f8c5057f1885c4c0" variant="contained" className='nav-item_btn study-system' color='error'>VÀO THI</Button>
+
+                        <Button onClick={handleShare} variant='contained' color='success' >Chia sẻ <ShareIcon sx={{ ml: 1 }} /></Button>
                     </Box>
 
                 </Box>

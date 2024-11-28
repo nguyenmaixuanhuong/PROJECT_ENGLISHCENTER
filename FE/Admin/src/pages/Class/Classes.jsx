@@ -7,14 +7,20 @@ import './Classes.styles.scss'
 import InforClass from '../../components/Class/ModalInforClass/InforClass';
 import { getCourse } from "../../services/course.api";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { filterData } from "../../utils/filterData";
+import SearchBar from "../../components/Search/SearchBar";
 function Classes() {
     useAuthCheck();
     const [course, setCourse] = useState();
     const { id } = useParams();
     const { classes, loadClassesByCourse, loadAllClasses } = useApp();
+    const [searchQuery, setSearchQuery] = useState("");
+    const classesFiltered = filterData(searchQuery, classes);
+
     useLayoutEffect(() => {
         loadClasses()
     }, [id])
+
     async function loadClasses() {
         if (id !== 'all') {
             await loadClassesByCourse(id);
@@ -24,6 +30,7 @@ function Classes() {
             await loadAllClasses();
         }
     }
+
     async function fectData() {
         const coursecurrent = await getCourse(id);
         setCourse(coursecurrent);
@@ -47,8 +54,9 @@ function Classes() {
                     <h5>Tất cả lớp học</h5>
                 </div>
             }
+            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             <div className='d-flex flex-wrap justify-content-center '>
-                {classes && classes.map(item => (
+                {classesFiltered && classesFiltered.map(item => (
                     <div className='class-item' key={item._id}>
                         <ClassCart loadClasses={loadClasses} class={item} ></ClassCart>
                     </div>))

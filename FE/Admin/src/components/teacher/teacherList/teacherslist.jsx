@@ -11,14 +11,16 @@ import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
 import './teacherslist.style.scss'
 import { Link } from 'react-router-dom';
-import {useApp} from '../../../context/AppProvider'
+import { useApp } from '../../../context/AppProvider'
+import { filterData } from '../../../utils/filterData';
+import SearchBar from '../../Search/SearchBar';
 function Row(props) {
     const { row } = props;
-    const {formatDate} = useApp()
+    const { formatDate } = useApp()
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell  align="center">
+                <TableCell align="center">
                     {row.account.username}
                 </TableCell>
                 <TableCell align="center">{row.fullName}</TableCell>
@@ -29,7 +31,7 @@ function Row(props) {
                 <TableCell align="center"><Link to={`/updateteacher/${row._id}`}>
                     <Tooltip title="Cập nhật">
                         <IconButton>
-                            <EditIcon/>
+                            <EditIcon />
                         </IconButton>
                     </Tooltip>
                 </Link></TableCell>
@@ -39,27 +41,32 @@ function Row(props) {
 }
 
 export default function ListStudent(props) {
+    const [searchQuery, setSearchQuery] = React.useState("");
+    const teacherFiltered = filterData(searchQuery, props.teachers);
     return (
-        <TableContainer component={Paper}  style={{maxHeight: '500px'}}>
-            <Table aria-label="collapsible table" stickyHeader>
-                <TableHead >
-                    <TableRow >
-                        <TableCell>Mã Giáo Viên</TableCell>
-                        <TableCell align="center">Tên Giáo Viên</TableCell>
-                        <TableCell align="center">Ngày Sinh</TableCell>
-                        <TableCell align="center">Số Điện Thoại</TableCell>
-                        <TableCell align="center">Email</TableCell>
-                        <TableCell align="center">Level</TableCell>
-                        <TableCell align="center"></TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {props.teachers && props.teachers.map((row) => (
-                        <Row key={row._id} row={row} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <>
+            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+            <TableContainer component={Paper} style={{ maxHeight: '500px' }}>
+                <Table aria-label="collapsible table" stickyHeader>
+                    <TableHead >
+                        <TableRow >
+                            <TableCell>Mã Giáo Viên</TableCell>
+                            <TableCell align="center">Tên Giáo Viên</TableCell>
+                            <TableCell align="center">Ngày Sinh</TableCell>
+                            <TableCell align="center">Số Điện Thoại</TableCell>
+                            <TableCell align="center">Email</TableCell>
+                            <TableCell align="center">Level</TableCell>
+                            <TableCell align="center"></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {teacherFiltered && teacherFiltered.map((row) => (
+                            <Row key={row._id} row={row} />
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
 
     );
 }

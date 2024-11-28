@@ -18,6 +18,8 @@ import './listStudent.style.scss'
 import { Link } from 'react-router-dom';
 import DetailInforStudent from '../ModalDetailInfor/detailInforStudent';
 import { useApp } from '../../../context/AppProvider';
+import SearchBar from '../../Search/SearchBar';
+import { filterData } from '../../../utils/filterData';
 function Row(props) {
     const { row } = props;
     const { formatDate } = useApp()
@@ -60,23 +62,23 @@ function Row(props) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
-                            <Typography variant="body1" sx={{fontWeight: 700}} gutterBottom component="div">
+                            <Typography variant="body1" sx={{ fontWeight: 700 }} gutterBottom component="div">
                                 Thông tin lớp học
                             </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{fontWeight: 700}} align='center'>STT</TableCell>
-                                        <TableCell sx={{fontWeight: 700}} align='center'>Tên Lớp</TableCell>
-                                        <TableCell sx={{fontWeight: 700}} align="center">Thời gian bắt đầu</TableCell>
-                                        <TableCell sx={{fontWeight: 700}} align="center">Thời gian kết thúc</TableCell>
+                                        <TableCell sx={{ fontWeight: 700 }} align='center'>STT</TableCell>
+                                        <TableCell sx={{ fontWeight: 700 }} align='center'>Tên Lớp</TableCell>
+                                        <TableCell sx={{ fontWeight: 700 }} align="center">Thời gian bắt đầu</TableCell>
+                                        <TableCell sx={{ fontWeight: 700 }} align="center">Thời gian kết thúc</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.class.map((historyRow,index) => (
+                                    {row.class.map((historyRow, index) => (
                                         <TableRow key={historyRow.className} >
-                                              <TableCell align='center'>
-                                                {index+1}
+                                            <TableCell align='center'>
+                                                {index + 1}
                                             </TableCell>
                                             <TableCell align='center' component="th" scope="row">
                                                 {historyRow.className}
@@ -98,28 +100,35 @@ function Row(props) {
 }
 
 export default function ListStudent(props) {
+    const [searchQuery, setSearchQuery] = React.useState("");
+    const studentFiltered = filterData(searchQuery, props.students);
+
     return (
-        <TableContainer component={Paper} style={{ maxHeight: '500px' }}>
-            <Table aria-label="collapsible table" stickyHeader>
-                <TableHead >
-                    <TableRow>
-                        <TableCell />
-                        <TableCell sx={{fontWeight: 700}}>Mã Học Viên</TableCell>
-                        <TableCell sx={{fontWeight: 700}} align="center">Tên Học Viên</TableCell>
-                        <TableCell sx={{fontWeight: 700}} align="center">Ngày Sinh</TableCell>
-                        <TableCell sx={{fontWeight: 700}} align="center">Số Điện Thoại</TableCell>
-                        <TableCell sx={{fontWeight: 700}} align="center">Địa Chỉ</TableCell>
-                        <TableCell align="center"></TableCell>
-                        <TableCell align="center"></TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {props.students && props.students.map((row) => (
-                        <Row key={row._id} row={row} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <>
+
+            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+            <TableContainer component={Paper} style={{ maxHeight: '500px' }}>
+                <Table aria-label="collapsible table" stickyHeader>
+                    <TableHead >
+                        <TableRow>
+                            <TableCell />
+                            <TableCell sx={{ fontWeight: 700 }}>Mã Học Viên</TableCell>
+                            <TableCell sx={{ fontWeight: 700 }} align="center">Tên Học Viên</TableCell>
+                            <TableCell sx={{ fontWeight: 700 }} align="center">Ngày Sinh</TableCell>
+                            <TableCell sx={{ fontWeight: 700 }} align="center">Số Điện Thoại</TableCell>
+                            <TableCell sx={{ fontWeight: 700 }} align="center">Địa Chỉ</TableCell>
+                            <TableCell align="center"></TableCell>
+                            <TableCell align="center"></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {studentFiltered && studentFiltered.map((row) => (
+                            <Row key={row._id} row={row} />
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
 
     );
 }

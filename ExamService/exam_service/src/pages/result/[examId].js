@@ -31,7 +31,6 @@ const ResultExam = ({ resultData }) => {
     if (resultData.status === 200) {
         const attempts = resultData.result
         const examSummary = attempts[0].examSummary
-        console.log(attempts);
 
         return (
             <div style={{ marginTop: '100px' }}>
@@ -67,14 +66,14 @@ const ResultExam = ({ resultData }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {attempts.map((item) => (
+                            {attempts.map((item, index) => (
                                 <TableRow
 
                                     key={item.attempt}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell align="center" component="th" scope="row">
-                                        {item.attempt}
+                                        {item.attempt ?? index + 1}
                                     </TableCell>
                                     <TableCell align="center">{new Date(item.submitTime).toLocaleString()}</TableCell>
                                     <TableCell align="center">{item.finalScore}</TableCell>

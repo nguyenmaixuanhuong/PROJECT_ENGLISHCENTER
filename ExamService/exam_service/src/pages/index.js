@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div className={styles.home_container}>
       <Box sx={{ p: 2, backgroundColor: 'aliceblue', borderRadius: 10, mb: 3 }}>
-        <Typography variant="h5" textAlign={'center'} fontWeight={'bold'} color={'#001567'}>Trang Chủ</Typography>
+        <Typography variant="h5" textAlign={'center'} fontWeight={'bold'} color={'#001567'}>Hệ Thống  Kiểm Tra</Typography>
       </Box>
 
       <Typography className={styles.titleHome} variant="body1" ml={2} width={'fit-content'} fontWeight={'bold'}>Công khai</Typography>

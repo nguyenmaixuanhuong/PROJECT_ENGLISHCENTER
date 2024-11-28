@@ -25,6 +25,7 @@ import styles from './examItem.module.scss'
 import ModalConfirmDelete from './modalConfirmDelete';
 import { isSubmitted } from '@/pages/api/isSubmitted';
 import ModalNotifyLimit from './modalNotifyLimit';
+
 export default function ExemItiem(props) {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -114,6 +115,25 @@ export default function ExemItiem(props) {
             handleClose();
         }
     }
+
+    const handleShare = async () => {
+        // Kiểm tra nếu Web Share API được hỗ trợ
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: props.exam?.summary.title || 'Chia sẻ bài viết',
+                    text: 'Tham gia bài kiểm tra này nhé!',
+                    url: `http://localhost:8000/test?id=${props.exam._id}`,
+                });
+                console.log('Chia sẻ thành công!');
+            } catch (error) {
+                console.error('Chia sẻ thất bại:', error);
+            }
+        } else {
+            alert('Chức năng chia sẻ không được hỗ trợ trên trình duyệt này.');
+        }
+    };
+
     return (
         <Box sx={{ p: 1 }}>
             {role === 'Teacher' ?
@@ -202,7 +222,8 @@ export default function ExemItiem(props) {
                                                     <>
                                                         <MenuItem onClick={(e) => {
                                                             e.stopPropagation();
-                                                            handleClose();
+                                                            handleShare();
+                                                            // handleClose();
                                                         }}>
                                                             <ShareIcon color='action' sx={{ mr: 2 }}></ShareIcon>  Chia sẻ
                                                         </MenuItem>
@@ -278,7 +299,7 @@ export default function ExemItiem(props) {
                                     {!submitted ? <Button variant='contained' color='warning' size='small' onClick={() => { router.push(`/test?id=${props.exam._id}`) }}> Vào Thi </Button>
                                         : <ModalNotifyLimit />
                                     }
-                                    <Button sx={{ mt: 2 }} variant='contained' size='small' onClick={() => { router.push(`/result/${props.exam._id}`) }}> kết quả </Button>
+                                    <Button sx={{ mt: 2 }} variant='contained' size='small' onClick={() => { router.push(`/result/${userId ? props.exam._id : 'exam_public'}`) }}> kết quả </Button>
                                 </Box>
                                 : ''
                             }

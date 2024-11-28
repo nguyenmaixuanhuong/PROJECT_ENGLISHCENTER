@@ -95,22 +95,20 @@ const SubmissionPage = ({ resultData, examId, userId }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {attempts.map((item) => (
+                            {attempts.map((item, index) => (
                                 <TableRow
 
                                     key={item.attempt}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell align="center" component="th" scope="row">
-                                        {item.attempt}
+                                        {item.attempt ?? index + 1}
                                     </TableCell>
                                     <TableCell align="center">{new Date(item.submitTime).toLocaleString()}</TableCell>
                                     <TableCell align="center">{item.finalScore}</TableCell>
                                     <TableCell align="center">
-                                        {
-                                            item.isPublicScore ? <ModalResultDetail resultData={item} saveFinalScore={saveFinalScore} />
-                                                : <Typography variant='body1' color='blue'>Chờ chấm điểm</Typography>
-                                        }
+
+                                        <ModalResultDetail resultData={item} saveFinalScore={saveFinalScore} />
                                     </TableCell>
 
                                 </TableRow>

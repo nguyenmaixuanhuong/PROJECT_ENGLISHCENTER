@@ -462,10 +462,6 @@ const CreateExam = ({ classes }) => {
                                 <AutoAwesomeMosaicIcon sx={{ mr: 1 }}></AutoAwesomeMosaicIcon>
                                 <p> Tạo Phần Mới</p>
                             </Button>
-                            <Button sx={{ m: 1, color: "rgb(16, 16, 89)" }}>
-                                <PhotoFilterIcon></PhotoFilterIcon>
-                                <p>Tạo tự động</p>
-                            </Button>
                             <Button onClick={addQuestion} sx={{ m: 1, backgroundColor: "rgb(16, 16, 89)" }} variant='contained'> + Thêm câu hỏi</Button>
                         </div>
                 }
