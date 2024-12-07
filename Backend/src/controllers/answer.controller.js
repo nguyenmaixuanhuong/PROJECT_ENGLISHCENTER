@@ -497,6 +497,7 @@ exports.getAllSubmisstions = async (req, res) => {
 exports.updateFinalScore = async (req, res) => {
     try {
         const { answersUpdate } = req.body
+        console.log(answersUpdate);
 
         for (const answer of answersUpdate) {
 

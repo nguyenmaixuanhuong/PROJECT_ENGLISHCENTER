@@ -37,6 +37,7 @@ const answerSchema = mongoose.Schema({
     attempt: {
         type: Number,  // thêm trường này để lưu số lần làm bài
         required: true,
+        default: 1
     }
 })
 

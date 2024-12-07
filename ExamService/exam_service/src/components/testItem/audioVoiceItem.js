@@ -4,11 +4,13 @@ import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import { Button } from '@mui/material';
 import Image from 'next/image';
 import { uploadFile } from '@/context/uploadFile';
+import LinearProgress from '@mui/material/LinearProgress';
 const AudioVoiceItem = ({ handleChangeAnswer, answer }) => {
     const [isRecording, setIsRecording] = useState(false);
     const [audioURL, setAudioURL] = useState('');
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
+    const [loading, setLoading] = useState(false);
 
     const startRecording = async () => {
         setIsRecording(true);
@@ -26,11 +28,13 @@ const AudioVoiceItem = ({ handleChangeAnswer, answer }) => {
         setIsRecording(false);
         mediaRecorderRef.current.stop();
         mediaRecorderRef.current.onstop = async () => {
+            setLoading(true)
             const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
             const audio = await uploadFile(audioBlob);
             handleChangeAnswer(audio.url, null)
             setAudioURL(audio.url);
             audioChunksRef.current = [];
+            setLoading(false)
         }
     };
     useEffect(() => {
@@ -53,7 +57,13 @@ const AudioVoiceItem = ({ handleChangeAnswer, answer }) => {
                     : <> <KeyboardVoiceIcon />  ghi âm câu trả lời</>}
 
             </Button>
-            {audioURL && <audio style={{ width: '100%' }} src={audioURL} controls />}
+            {loading ? <LinearProgress /> :
+                <>
+                    {audioURL && <audio style={{ width: '100%' }} src={audioURL} controls />}
+                </>
+
+            }
+
         </div>
     );
 };

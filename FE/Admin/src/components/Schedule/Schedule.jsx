@@ -169,6 +169,8 @@ export default () => {
     for (const item of data) {
       if (appointment.startDate >= new Date(item.startDate) && appointment.startDate < new Date(item.endDate)
         || (appointment.endDate >= new Date(item.startDate) && appointment.endDate < new Date(item.endDate))) {
+        console.log(appointment);
+
         if (appointment.room === item.room) {
           setSuccess(false);
           setError('Phòng này đã có lớp học')
@@ -177,6 +179,11 @@ export default () => {
         }
         else if (appointment.teacher === item.teacher) {
           setError('Giáo viên này đã có tiết dạy')
+          setOpenSnackbar(true)
+          return true;
+        }
+        else if (appointment.class === item.class) {
+          setError('Lớp học đã có tiết trong thời gian này')
           setOpenSnackbar(true)
           return true;
         }

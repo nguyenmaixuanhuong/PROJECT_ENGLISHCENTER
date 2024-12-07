@@ -50,11 +50,11 @@ function TestAppBar() {
                     examId: exam.id,
                 })
             });
+
+            await router.replace(`/result/${exam.id}`)
             localStorage.setItem('testSubmitted', 'true');
             localStorage.setItem('timeLeft', null)
             localStorage.setItem('timestamp', null)
-            await router.replace(`/result/${exam.id}`)
-            setLoading(false)
         }
     }
 
@@ -66,6 +66,7 @@ function TestAppBar() {
             toast.error('Đã có lỗi xảy ra, vui lòng thử lại ')
         }
         else {
+
             await fetch('/api/deleteAnswer', {
                 method: 'DELETE',
                 headers: {
@@ -77,11 +78,11 @@ function TestAppBar() {
                 })
             });
             dispatch(setResultExam(response))
+
+            await router.replace(`/result/exam_public`)
             localStorage.setItem('testSubmitted', 'true');
             localStorage.setItem('timeLeft', null)
             localStorage.setItem('timestamp', null)
-            await router.replace(`/result/exam_public`)
-            setLoading(false)
         }
     }
 

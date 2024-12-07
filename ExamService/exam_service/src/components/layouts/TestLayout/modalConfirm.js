@@ -48,7 +48,6 @@ export default function ModalConfirm({ type, exam, handleSubmit, loading }) {
             },
             body: JSON.stringify({ userId: userId ? userId : guestId, examId: exam.id })
         });
-        console.log(userId);
 
         if (res.status === 200) {
             if (userId) {

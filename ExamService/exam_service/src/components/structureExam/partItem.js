@@ -20,6 +20,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { updatedSTTQuestions } from '@/context/updateQuestions';
 import { toast } from 'react-toastify';
+import LinearProgress from '@mui/material/LinearProgress';
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -41,7 +42,7 @@ export default function PartItem(props) {
     const [passage, setPassage] = React.useState(props?.element.passage);
     const [score, setScore] = React.useState(parts[props.element.number - 1].score || props?.element.score);
     const [scoreQuestion, setScoreQuestion] = React.useState([]);
-
+    const [loading, setLoading] = React.useState(false)
     const handleChangeTilte = (e) => {
         setTitle(e.target.value);
         const title = {
@@ -112,6 +113,7 @@ export default function PartItem(props) {
 
     const handleChangeAudio = async (e) => {
         const audio = e.target.files[0];
+        setLoading(true)
         const result = await uploadFile(audio);
         const questionUpdated = parts.map((part, index) => {
             if (index === props?.element.number - 1) {
@@ -122,9 +124,9 @@ export default function PartItem(props) {
             }
             return part;
         });
-
         dispatch(setQuestions(questionUpdated));
         setAudio(result);
+        setLoading(false)
     }
 
     const handleChangePassageReading = async (e) => {
@@ -212,12 +214,13 @@ export default function PartItem(props) {
                         fullWidth label="Tiêu đề"
                         variant="outlined" />
                     <Box sx={{ mt: 3 }}>
-                        {audio ?
-                            <audio controls>
-                                <source src={audio.url} type="audio/mp3" />
-                            </audio>
-                            : ''
+                        {loading ? <LinearProgress /> :
+                            <>
+                                {audio && <audio controls> <source src={audio.url} type="audio/mp3" /> </audio>}
+                            </>
+
                         }
+
                         <br></br>
                         {option === "Listening" &&
                             <Button

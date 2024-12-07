@@ -19,6 +19,7 @@ import { Divider } from '@mui/material';
 function Header() {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const user = useSelector((state) => state.user?.user)
+    const role = useSelector((state) => state.user?.role)
     const dispatch = useDispatch();
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -45,7 +46,7 @@ function Header() {
                     <Typography
                         variant="h5"
                     >
-                        LỚP HỌC
+                        {role === 'Student' ? 'HỌC VIÊN' : 'GIÁO VIÊN '}
                     </Typography>
                     <Box sx={{ flexGrow: 0 }}>
                         <Notifications />
